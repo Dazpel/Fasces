@@ -10,13 +10,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
-import './LogIn.css'
+import './LogIn.css';
 
 import { auth, signInWithGoogle } from '../firebase/firebase.utils';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -55,16 +54,8 @@ export default function LogIn({ history }) {
 
   const classes = useStyles();
   return (
-    <Container component="main" maxWidth="xs" className='gradient'>
-     
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon onClick={authGoogle} />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-      </div>
-    </Container>
+    <Grid container justify="center" alignItems="center" className='gradient'>
+      <GoogleButton onClick={authGoogle} />
+    </Grid>
   );
 }
