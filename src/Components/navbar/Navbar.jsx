@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
       style={{backgroundColor: 'inherit'}}
     >
       <BottomNavigationAction style={{color: '#211c63'}} label="Home" icon={<Link to="/" style={{color: 'inherit'}}><HomeIcon /></Link>} />
-      <BottomNavigationAction style={{color: '#211c63'}} label="Payments" icon={<MoneyIcon />} />
+      <BottomNavigationAction style={{color: '#211c63'}} label="Payments" icon={<Link to='/Calculate' style={{color: 'inherit'}}><MoneyIcon /></Link>} />
       <BottomNavigationAction style={{color: '#211c63'}} label="Images" icon={<PhotoLibraryIcon />} />
       </BottomNavigation>
         </Toolbar>

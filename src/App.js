@@ -9,6 +9,7 @@ import './App.css';
 import LogIn from './Components/LogIn/LogIn';
 
 import Chat from './Components/Chat/Chat';
+import Calculate from './Components/Algorithm/Calculate'
 
 export default class App extends Component {
   state = {
@@ -60,6 +61,11 @@ export default class App extends Component {
             exact
             path="/chat"
             component={(props) => <Chat {...props} currentUser={this.state.currentUser} />}
+          />
+          <Route
+            exact
+            path="/Calculate"
+            component={(props) => <Calculate {...props} currentUser={this.state.currentUser} />}
           />
           <Route
             path="/"
