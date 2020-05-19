@@ -21,7 +21,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+    
+    const { displayName, email, photoURL } = userAuth;
     const createdAt = new Date();
     const trackStock = []
 
@@ -29,6 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       await userRef.set({
         displayName,
         email,
+        photoURL,
         createdAt,
         trackStock,
         ...additionalData,
@@ -40,6 +42,21 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+
+
+export const userList = async () => {
+
+  let userArr=[];
+
+  let users = await firestore.collection('users').get()
+  users.docs.map((doc,i) => userArr[i]={'id': doc.id, ...doc.data()});
+  
+  if(userArr.length>0){
+    console.log(userArr)
+    return userArr
+  }
+  
+}
 
 
 export const updateTracking = async (user, item) => {
@@ -80,7 +97,8 @@ export const firestore = firebase.firestore();
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => {
-  console.log(auth.signInWithPopup(provider))
+  auth.signInWithPopup(provider)
+  // console.log(auth.signInWithPopup(provider))
   };
 
 export default firebase;
