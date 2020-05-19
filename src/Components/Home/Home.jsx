@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { auth } from '../firebase/firebase.utils';
+import Navbar from '../navbar/Navbar'
 import {Link } from 'react-router-dom';
 import axios from 'axios';
 
