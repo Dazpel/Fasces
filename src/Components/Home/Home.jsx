@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { auth } from '../firebase/firebase.utils';
+import Navbar from '../navbar/Navbar'
 
 
 export default class Home extends Component {
@@ -12,10 +13,13 @@ export default class Home extends Component {
       this.props.history.push('/login');
     };
 
-    return <div>Home page, it means we are log in.
+    return <div>
         <div>
             <button  onClick={logOut}>Log Out</button>
         </div>
+        <h1>
+            HOME PAGE
+        </h1>
     </div>;
   }
 }

@@ -7,6 +7,7 @@ import {
 import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
+import Navbar from './Components/navbar/Navbar'
 
 export default class App extends Component {
   state = {
@@ -70,6 +71,7 @@ export default class App extends Component {
             component={(props) => <LogIn {...props} />}
           />
         </Switch>
+        <Navbar/>
       </div>
     );
   }
