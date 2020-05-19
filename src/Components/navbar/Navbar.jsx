@@ -4,17 +4,10 @@ import AppBar from '@material-ui/core/AppBar';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home'
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+
 
 const useStyles = makeStyles((theme) => ({
     text: {

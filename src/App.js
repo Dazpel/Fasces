@@ -8,6 +8,7 @@ import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
 import Navbar from './Components/navbar/Navbar'
+import Chat from './Components/Chat/Chat';
 
 export default class App extends Component {
   state = {
@@ -53,8 +54,13 @@ export default class App extends Component {
   render() {
     const { currentUser, isData } = this.state;
     return (
-      <div >
+      <div>
         <Switch>
+          <Route
+            exact
+            path="/chat"
+            component={(props) => <Chat {...props} currentUser={this.state.currentUser} />}
+          />
           <Route
             path="/"
             component={(props) =>
