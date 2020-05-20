@@ -1,3 +1,10 @@
 .chatbox-container {
-    height: 440px;
+    height: 93.7%
   }
+.full-view {
+  height: 100vh;
+}
+.top {
+
+  height: 6%
+}

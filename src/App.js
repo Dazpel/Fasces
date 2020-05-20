@@ -7,9 +7,11 @@ import {
 import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
-
+import Navbar from './Components/navbar/Navbar'
 import Chat from './Components/Chat/Chat';
 import Calculate from './Components/Algorithm/Calculate'
+import ProfileView from './Components/Profile/ProfileView'
+import AccountView from './Components/Profile/AccountView'
 
 export default class App extends Component {
   state = {
@@ -68,6 +70,16 @@ export default class App extends Component {
             component={(props) => <Calculate {...props} currentUser={this.state.currentUser} />}
           />
           <Route
+            exact
+            path="/Profile"
+            component={(props) => <ProfileView {...props} currentUser={this.state.currentUser} />}
+          />
+          <Route
+            exact
+            path="/Account"
+            component={(props) => <AccountView {...props} currentUser={this.state.currentUser} />}
+          />
+          <Route
             path="/"
             component={(props) =>
               isData ? (
@@ -83,6 +95,7 @@ export default class App extends Component {
             component={(props) => <LogIn {...props} />}
           />
         </Switch>
+        
       </div>
     );
   }
