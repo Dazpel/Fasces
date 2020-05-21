@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import {
-  updateReceiptArr,
-} from '../firebase/firebase.utils';
+import { updateReceiptArr } from '../firebase/firebase.utils';
 import axios from 'axios';
 import ReceiptTable from './ReceiptTable';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
-import './receipt.css'
+import ToastMessage from '../Toast/toastMessage';
+import './receipt.css';
 
 //API KEY FOR OCR SCAN
 let MY_URL_KEY = '31bb9650994211eab7efc1191d38e165';
 
 export default class Receipt extends Component {
   state = {
-    imageUrl: '',
-    
+    imageUrl: undefined,
   };
 
   //IN THIS FUNCTION WE MAKE A CALL TO THE ACR SCAN API AND WE PASS THE DATA WE RECIEVE TO
@@ -46,7 +44,7 @@ export default class Receipt extends Component {
     //CLEAN STATE FOR ANOTHER IMAGE TO BE UPLOADED IF NEEDED
 
     this.setState({
-      imageUrl: '',
+      imageUrl: undefined,
     });
   };
 
@@ -75,6 +73,7 @@ export default class Receipt extends Component {
 
         var url = response.secure_url;
         var id = response.asset_id;
+
         // UPDATE STATE WITH IMAGE URL AND ID
         this.setState({
           imageUrl: {
@@ -92,43 +91,51 @@ export default class Receipt extends Component {
   };
 
   render() {
+    let display = '';
+    (this.state.imageUrl===undefined) ? display = false : display=true
+
     return (
       <div>
-        <ReceiptTable  />
-        <Grid container justify="center" alignItems="center" >
-        <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        // className={classes.button}
-        startIcon={<SaveIcon />}
-        onClick={() => this.uploadAndScan(this.state.imageUrl)}
-      >
-        Save
-      </Button>
-      <input
-        accept="image/*"
-        className='uploadFile groupBtn'
-        id="contained-button-file"
-        multiple
-        type="file"
-        onChange={(e) => this.handleFileUpload(e)}
-      />
-      <label htmlFor="contained-button-file">
-         <Button
-        variant="contained"
-        color="default"
-        size="small"
-        component="span"
-        className='groupBtn'
-        startIcon={<CloudUploadIcon />}
-        
-      >
-        Upload
-      </Button>
-      </label>
-        </Grid>
+        <div className="table">
+          <ReceiptTable />
+        </div>
 
+        <Grid container justify="center" alignItems="center">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            // className={classes.button}
+            startIcon={<SaveIcon />}
+            onClick={() => this.uploadAndScan(this.state.imageUrl)}
+          >
+            Save
+          </Button>
+          <input
+            accept="image/*"
+            className="uploadFile groupBtn"
+            id="contained-button-file"
+            multiple
+            type="file"
+            onChange={(e) => this.handleFileUpload(e)}
+          />
+          <label htmlFor="contained-button-file">
+            <Button
+              variant="contained"
+              color="default"
+              size="small"
+              component="span"
+              className="groupBtn"
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload
+            </Button>
+          </label>
+        </Grid>
+       {
+         display ? <ToastMessage /> : ''
+       }
+        
       </div>
     );
   }
