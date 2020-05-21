@@ -1,0 +1,11 @@
+.uploadFile {
+    display: none !important;
+}
+
+.groupBtn{
+    margin-left: 10px !important;
+}
+
+.receipTable{
+    height: 70vh;
+}

@@ -9,6 +9,8 @@ import './App.css';
 import LogIn from './Components/LogIn/LogIn';
 import Navbar from './Components/navbar/Navbar'
 import Chat from './Components/Chat/Chat';
+import Receipt from './Components/ReceiptView/Receipt';
+
 
 export default class App extends Component {
   state = {
@@ -44,6 +46,7 @@ export default class App extends Component {
     });
   };
 
+
   //On log out clean session data and set it to null
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -58,8 +61,13 @@ export default class App extends Component {
         <Switch>
           <Route
             exact
-            path="/chat"
+            path="/home/chat"
             component={(props) => <Chat {...props} currentUser={this.state.currentUser} />}
+          />
+          <Route
+            exact
+            path="/home/receipt"
+            component={(props) => <Receipt {...props}/>}
           />
           <Route
             path="/"
