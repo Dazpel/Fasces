@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { auth } from '../firebase/firebase.utils';
-import Navbar from '../navbar/Navbar'
+import Navbar from '../navbar/Navbar';
+import Topbar from '../navbar/Topbar';
 import {Link } from 'react-router-dom';
+import axios from 'axios';
+import { Switch, Route } from 'react-router-dom';
 
 
 
@@ -26,12 +29,14 @@ export default class Home extends Component {
 
     return (
       <div>
+      <Topbar logOut={this.logOut}/>
         Home page, it means we are log in.
         <div>
           <button onClick={logOut}>Log Out</button>
           <button onClick={goToReceipt}>go to receipt</button>
           <button onClick={goToChat}>go to chat</button>
         </div>
+        <Navbar/>
       </div>
     );
   }

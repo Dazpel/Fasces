@@ -1,13 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import Toolbar from '@material-ui/core/Toolbar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import HomeIcon from '@material-ui/icons/Home'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
-
+import { Link } from 'react-router-dom'
+ 
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -44,34 +45,23 @@ const useStyles = makeStyles((theme) => ({
     const [value, setValue] = React.useState(0);
   
     return (
-        <AppBar position="fixed" color="primary" className={classes.appBar}>
+
+        <AppBar position="fixed" color="white" className={classes.appBar}>
         <Toolbar>
-          {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <MenuIcon />
-          </IconButton>
-           <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-            <AddIcon />
-          </Fab> 
-          <div className={classes.grow} />
-          <IconButton color="inherit">
-            <SearchIcon />
-          </IconButton>
-          <IconButton edge="end" color="inherit">
-            <MoreIcon />
-          </IconButton> */}
-              {/* <BottomNavigation
+        <BottomNavigation 
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
       }}
-      showLabels
-      className={classes.root}
-    > */}
-      <BottomNavigationAction label="Recents" icon={<HomeIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<MoneyIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<PhotoLibraryIcon />} />
-    {/* </BottomNavigation> */}
+      className={classes.grow}
+      style={{backgroundColor: 'white'}}
+    >
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Home" icon={<Link to="/" style={{color: '#0095ff'}}><HomeIcon /></Link>} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Payments" icon={<Link to='/Calculate' style={{color: '#0095ff'}}><MoneyIcon /></Link>} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Images" icon={<PhotoLibraryIcon />} />
+      </BottomNavigation>
         </Toolbar>
       </AppBar>
+    
     )
 }
