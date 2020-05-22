@@ -40,8 +40,8 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: 'white'}}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title} style={{color:'#0095ff'}}>
-            SPLITEX<img src='/images/x.png' alt='X' style={{width: '10px'}}/>
+          <Typography variant="h6" className={classes.title} style={{color:'#0095ff', fontFamily: 'Comic Sans MS, cursive, sans-serif'}}>
+            SPLITEX
           </Typography>
           {auth && (
             <div>

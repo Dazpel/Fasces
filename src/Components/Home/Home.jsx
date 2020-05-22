@@ -3,6 +3,7 @@ import Navbar from '../navbar/Navbar';
 import Topbar from '../navbar/Topbar';
 import ChatIcon from '@material-ui/icons/QuestionAnswer'
 import { Link } from 'react-router-dom'
+import GroupSearch from '../Groups/Groups'
 
 
 
@@ -19,9 +20,10 @@ export default class Home extends Component {
   printGroups = () => {
     return this.props.currentUser.trackStock.map(ele => {
       return (
-        <div>
-          <Link to={`/chat/${ele}`} >go to chat {ele}</Link>
-        </div>
+        <Link to={`/chat/${ele}`} style={{color:'white', textDecoration: 'none'}}><div style={{color:'white', backgroundColor: '#0095ff'}}>
+          <ChatIcon/> {ele}
+          <hr style={{borderColor: 'white'}}/>
+        </div></Link>
       )
     })
   }
@@ -42,22 +44,18 @@ export default class Home extends Component {
     return (
       <div>
       <Topbar/>
-    
-        <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1>
         <div>
-          <h2>Groups</h2><Link to='/'><p>Start a group</p></Link>
+        {/* <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1> */}
+        <div style={{marginLeft:'10px', marginRight: '10px'}}>
+        <Link to='/creategroup' style={{color:"#0095ff"}} ><h5 style={{textAlign: 'end',marginBottom:'0', marginTop: '3px'}}>Start a group</h5></Link>
+          <h2 style={{marginTop: '0', color:"#0095ff", marginBottom:'0'}}>Groups</h2>
+          <GroupSearch currentUser={this.props.currentUser}/>
         </div>
-        <hr/>
-        <div>
-          <ChatIcon/><button onClick={goToChat}>go to chat</button>
-        
-          <button onClick={this.goToGroups}>go to groups</button>
-         
-          <button onClick={goToChat}>go to chat</button>
-          <button onClick={goToImage}>check img</button>
+        </div>
+        <div style={{marginLeft:'10px', marginRight: '10px'}}>        
+          <hr style={{borderColor: 'white', marginBottom: '0'}}/>
           {this.printGroups()}
         </div>
-        <hr/>
         <Navbar/>
       </div>
     );
