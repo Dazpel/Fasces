@@ -4,37 +4,13 @@ import Navbar from '../navbar/Navbar';
 import Topbar from '../navbar/Topbar';
 import {Link } from 'react-router-dom';
 import axios from 'axios';
+import { Switch, Route } from 'react-router-dom';
 
-let MY_URL_KEY = '31bb9650994211eab7efc1191d38e165';
+
+
 
 export default class Home extends Component {
-  getReceiptData = () => {
 
-    let file = {
-      url: 'https://edge.taggun.io/web/receipt4.png',
-      headers: {
-        'x-custom-key': 'string',
-      },
-    };
-
-    axios
-      .post('https://api.taggun.io/api/receipt/v1/simple/url', file, {
-        headers: {
-            'apikey': MY_URL_KEY,
-        }
-    })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  goToChat = (room) => {
-    console.log('run')
-    this.props.history.push(`/chat/${room}`);
-  }
 
   goToGroups = () => {
     console.log('run')
@@ -51,6 +27,8 @@ export default class Home extends Component {
     })
   }
 
+  
+
   render() {
     // console.log(this.props.currentUser);
     //LOG OUT FUNCTION HANDLER
@@ -58,15 +36,27 @@ export default class Home extends Component {
       auth.signOut();
       this.props.history.push('/login');
     };
+    const goToReceipt = () => {
+      
+      this.props.history.push('/home/receipt');
+    };
+    const goToChat = () => {
+      this.props.history.push('/home/chat');
+    }
+    const goToImage = () => {
+      this.props.history.push('/home/image');
+    }
+
     return (
       <div>
       <Topbar logOut={this.logOut}/>
         Home page, it means we are log in.
         <div>
           <button onClick={logOut}>Log Out</button>
-          <button onClick={this.getReceiptData}>test receipt</button>
-          <button onClick={this.goToChat}>go to chat</button>
           <button onClick={this.goToGroups}>go to groups</button>
+          <button onClick={goToReceipt}>go to receipt</button>
+          <button onClick={goToChat}>go to chat</button>
+          <button onClick={goToImage}>check img</button>
           {this.printGroups()}
         </div>
         <Navbar/>

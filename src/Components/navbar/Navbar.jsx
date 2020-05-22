@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   
     return (
 
-        <AppBar position="fixed" color="primary" className={classes.appBar}>
+        <AppBar position="fixed" color="white" className={classes.appBar}>
         <Toolbar>
         <BottomNavigation 
       value={value}
@@ -54,11 +54,11 @@ const useStyles = makeStyles((theme) => ({
         setValue(newValue);
       }}
       className={classes.grow}
-      style={{backgroundColor: 'inherit'}}
+      style={{backgroundColor: 'white'}}
     >
-      <BottomNavigationAction style={{color: '#211c63'}} label="Home" icon={<Link to="/" style={{color: 'inherit'}}><HomeIcon /></Link>} />
-      <BottomNavigationAction style={{color: '#211c63'}} label="Payments" icon={<Link to='/Calculate' style={{color: 'inherit'}}><MoneyIcon /></Link>} />
-      <BottomNavigationAction style={{color: '#211c63'}} label="Images" icon={<PhotoLibraryIcon />} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Home" icon={<Link to="/" style={{color: '#0095ff'}}><HomeIcon /></Link>} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Payments" icon={<Link to='/Calculate' style={{color: '#0095ff'}}><MoneyIcon /></Link>} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Images" icon={<PhotoLibraryIcon />} />
       </BottomNavigation>
         </Toolbar>
       </AppBar>

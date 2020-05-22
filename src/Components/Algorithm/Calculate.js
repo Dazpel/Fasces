@@ -4,7 +4,7 @@ import Topbar from '../navbar/Topbar'
 class Calculate extends Component {
     render() {
         return (
-            <div className='App'>
+            <div >
                 <Topbar/>
                 BILLY BRAINS CALCULATIONS (U#))JQFJALKAS2029lol
                 <Navbar/>

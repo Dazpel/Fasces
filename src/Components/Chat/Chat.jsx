@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Talk from 'talkjs';
 import { userList } from '../firebase/firebase.utils';
-
+import Topbar from '../navbar/Topbar'
 import './chat.css';
-
+import BackButton from './BackButton'
 export default class Chat extends Component {
   constructor(props) {
     super(props);
@@ -81,6 +81,13 @@ export default class Chat extends Component {
 
   render() {
     console.log(this.state.groupUsers);
-    return <div className="chatbox-container" ref={this.talkjsContainer}></div>;
-  }
+    return (
+      <div className="full-view">
+      <div className="top">
+      <BackButton/>
+      </div>
+    <div className="chatbox-container" ref={this.talkjsContainer}>
+    </div>
+    </div>
+    )}
 }
