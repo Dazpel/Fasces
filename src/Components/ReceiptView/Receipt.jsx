@@ -15,6 +15,7 @@ let MY_URL_KEY = '31bb9650994211eab7efc1191d38e165';
 export default class Receipt extends Component {
   state = {
     imageUrl: undefined,
+    saved: false,
   };
 
   //IN THIS FUNCTION WE MAKE A CALL TO THE ACR SCAN API AND WE PASS THE DATA WE RECIEVE TO
@@ -45,6 +46,7 @@ export default class Receipt extends Component {
 
     this.setState({
       imageUrl: undefined,
+      saved:true,
     });
   };
 
@@ -80,6 +82,7 @@ export default class Receipt extends Component {
             url: url,
             id: id,
           },
+          saved:false,     
         });
       }
     };
@@ -91,8 +94,10 @@ export default class Receipt extends Component {
   };
 
   render() {
-    let display = '';
-    (this.state.imageUrl===undefined) ? display = false : display=true
+    let onUp = false;
+    let onSaved = this.state.saved;
+    (this.state.imageUrl===undefined) ? onUp = false : onUp=true;
+    (onSaved) ? onSaved = true : onSaved=false;
 
     return (
       <div>
@@ -133,7 +138,10 @@ export default class Receipt extends Component {
           </label>
         </Grid>
        {
-         display ? <ToastMessage /> : ''
+         onUp ? <ToastMessage message={'Success, ready to save!'} /> : ''
+       }
+       {
+         onSaved ? <ToastMessage message={'Receipt saved!'} /> : ''
        }
         
       </div>
