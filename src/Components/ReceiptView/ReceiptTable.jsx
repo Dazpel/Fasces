@@ -68,6 +68,7 @@ export default class ReceiptTable extends Component {
             </TableHead>
             <TableBody>
               {list.map((el, i) => (
+                
                 (expenses+=el.amount),
                 <TableRow key={el.id}>
                   <TableCell className="bold">
@@ -81,7 +82,7 @@ export default class ReceiptTable extends Component {
           </Table>
           <Grid container justify="center" alignItems="center" className='receipTable-expenses'>
           <Typography variant="subtitle1" gutterBottom>
-       {`Current expenses: ${expenses}$`}
+       {`Current expenses: ${expenses.toFixed(2)}$`}
       </Typography>
           </Grid>
           

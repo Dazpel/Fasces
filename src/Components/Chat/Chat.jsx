@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Talk from 'talkjs';
 import { userList } from '../firebase/firebase.utils';
-import Topbar from '../navbar/Topbar'
 import './chat.css';
 import BackButton from './BackButton'
 export default class Chat extends Component {

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ToastMessage() {
+export default function ToastMessage({message}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -36,9 +36,9 @@ export default function ToastMessage() {
 
   return (
     <div className={classes.root}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Success, ready to save!
+          {message}
         </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>

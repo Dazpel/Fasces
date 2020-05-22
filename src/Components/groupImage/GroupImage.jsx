@@ -10,8 +10,9 @@ import './groupImage.css';
 
 export default class GroupImage extends Component {
   state = {
-    imageUrl: '',
+    imageUrl: undefined,
     imageArr: '',
+    saved: false,
   };
 
   updateArr = async () => {
@@ -40,25 +41,31 @@ export default class GroupImage extends Component {
       .then((response) => {
         // console.log('response is: ', response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ imageUrl: response.data.secure_url });
+        this.setState({ imageUrl: response.data.secure_url, saved: false });
       })
       .catch((err) => {
         console.log('Error while uploading the file: ', err);
       });
   };
 
-  // this method submits the form
+  // THIS METHOD ADDS THE IMAGE TO THE LIST
   handleSubmit = async () => {
     await actions.uploadToDB(this.state);
 
     this.setState({
-      imageUrl: '',
+      imageUrl: undefined,
+      saved: true,
     });
 
     this.updateArr();
   };
 
   render() {
+    let onUp = false;
+    let onSaved = this.state.saved;
+    this.state.imageUrl === undefined ? (onUp = false) : (onUp = true);
+    onSaved ? (onSaved = true) : (onSaved = false);
+
     const { imageArr } = this.state;
     return (
       <div>
@@ -66,7 +73,12 @@ export default class GroupImage extends Component {
           <GroupImageFolder imageArr={imageArr} />
         </div>
 
-        <Grid container justify="center" alignItems="center" className='folderBtn' >
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className="folderBtn"
+        >
           <Button
             variant="contained"
             color="primary"
@@ -98,9 +110,8 @@ export default class GroupImage extends Component {
             </Button>
           </label>
         </Grid>
-        {/* {
-         display ? <ToastMessage /> : ''
-       } */}
+        {onUp ? <ToastMessage message={'Success, ready to save!'} /> : ''}
+        {onSaved ? <ToastMessage message={'Image saved!'} /> : ''}
       </div>
     );
   }

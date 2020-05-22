@@ -8,13 +8,14 @@ import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
 import Groups from './Components/Groups/Groups';
-import CreateGroup from './Components/Groups/CreateGroup'
-import Navbar from './Components/navbar/Navbar'
+import CreateGroup from './Components/Groups/CreateGroup';
+import Navbar from './Components/navbar/Navbar';
+import Topbar from './Components/navbar/Topbar';
 import Chat from './Components/Chat/Chat';
 import Receipt from './Components/ReceiptView/Receipt';
-import Calculate from './Components/Algorithm/Calculate'
-import ProfileView from './Components/Profile/ProfileView'
-import AccountView from './Components/Profile/AccountView'
+import Calculate from './Components/Algorithm/Calculate';
+import ProfileView from './Components/Profile/ProfileView';
+import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
 
 export default class App extends Component {
@@ -51,7 +52,6 @@ export default class App extends Component {
     });
   };
 
-
   //On log out clean session data and set it to null
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -67,31 +67,39 @@ export default class App extends Component {
           <Route
             exact
             path="/chat/:id"
-            component={(props) => <Chat {...props} currentUser={this.state.currentUser} />}
+            component={(props) => (
+              <Chat {...props} currentUser={this.state.currentUser} />
+            )}
           />
           <Route
             exact
             path="/home/receipt"
-            component={(props) => <Receipt {...props}/>}
-            />
-            <Route
+            component={(props) => <Receipt {...props} />}
+          />
+          <Route
             exact
             path="/home/image"
-            component={(props) => <GroupImage {...props}/>}
-            />
-            <Route
+            component={(props) => <GroupImage {...props} />}
+          />
+          <Route
             path="/Calculate"
-            component={(props) => <Calculate {...props} currentUser={this.state.currentUser} />}
+            component={(props) => (
+              <Calculate {...props} currentUser={this.state.currentUser} />
+            )}
           />
           <Route
             exact
             path="/Profile"
-            component={(props) => <ProfileView {...props} currentUser={this.state.currentUser} />}
+            component={(props) => (
+              <ProfileView {...props} currentUser={this.state.currentUser} />
+            )}
           />
           <Route
             exact
             path="/Account"
-            component={(props) => <AccountView {...props} currentUser={this.state.currentUser} />}
+            component={(props) => (
+              <AccountView {...props} currentUser={this.state.currentUser} />
+            )}
           />
           <Route
             exact
@@ -112,15 +120,18 @@ export default class App extends Component {
           <Route
             exact
             path="/groups"
-            component={(props) => <Groups {...props} currentUser={this.state.currentUser}/>}
+            component={(props) => (
+              <Groups {...props} currentUser={this.state.currentUser} />
+            )}
           />
           <Route
             exact
             path="/creategroup"
-            component={(props) => <CreateGroup {...props} currentUser={this.state.currentUser}/>}
+            component={(props) => (
+              <CreateGroup {...props} currentUser={this.state.currentUser} />
+            )}
           />
         </Switch>
-        
       </div>
     );
   }

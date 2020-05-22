@@ -12,6 +12,7 @@
 
 .folderContainer {
     height: 80vh;
+    overflow: scroll;
 }
 
 .folderView{

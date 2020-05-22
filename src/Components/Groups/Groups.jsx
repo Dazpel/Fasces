@@ -13,12 +13,12 @@ class Groups extends Component {
 
     async componentDidMount()
     {
-        let  currentUser = this.props.currentUser
         this.setState({currentUser: this.props.currentUser})
     }
 
     joinGroup = (groupName) =>
     {
+        console.log(this.props.currentUser)
         let  currentUser = this.props.currentUser
         console.log(currentUser)
         console.log(groupName)
@@ -62,7 +62,6 @@ class Groups extends Component {
     render() {
         return (
             <div>
-                <Link to="/creategroup"><button>Create Group</button></Link>
                 {/* {this.state.currentUser ? this.joinGroup() : ('')} */}
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     <input type="text" onChange={(e) => this.handleChange(e)} placeholder="Search Friends Email" name="email"/>
