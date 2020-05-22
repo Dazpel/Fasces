@@ -66,7 +66,7 @@ export default class GroupImage extends Component {
           <GroupImageFolder imageArr={imageArr} />
         </div>
 
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="center" alignItems="center" className='folderBtn' >
           <Button
             variant="contained"
             color="primary"

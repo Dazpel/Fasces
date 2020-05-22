@@ -3,10 +3,10 @@ import Progress from '../progress/Progress';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+// import GridListTileBar from '@material-ui/core/GridListTileBar';
+// import ListSubheader from '@material-ui/core/ListSubheader';
+// import IconButton from '@material-ui/core/IconButton';
+// import InfoIcon from '@material-ui/icons/Info';
 import './groupImage.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,32 +21,32 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     width: 500,
-    height: 450,
+    height: '100%g',
+  },
+  title: {
+    marginBottom: 20,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
 
-export default function GroupImageFolder({imageArr}) {
-
+export default function GroupImageFolder({ imageArr }) {
   const classes = useStyles();
-  
-//  const { imageArr } = this.props;
 
- const displayImages = (list) => {
+  //  const { imageArr } = this.props;
+
+  const displayImages = (list) => {
     console.log(list);
     return (
-        <div className={classes.root}>
-          <GridList cellHeight={180} className={classes.gridList}>
-            <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-              <ListSubheader component="div">{`My Trip`}</ListSubheader>
-             
-            </GridListTile>
-            {list.map((tile) => (
-              <GridListTile key={tile._id}>
-                <img src={tile.imageUrl} alt={tile._id} />
-                {/* <GridListTileBar
+      <div className={classes.root}>
+        <div className={classes.title}>My Trip</div>
+
+        <GridList cellHeight={180} className={classes.gridList}>
+          {list.map((tile) => (
+            <GridListTile key={tile._id}>
+              <img src={tile.imageUrl} alt={tile._id} />
+              {/* <GridListTileBar
                   title={tile.title}
                   subtitle={<span>by: {tile.author}</span>}
                   actionIcon={
@@ -55,11 +55,11 @@ export default function GroupImageFolder({imageArr}) {
                     </IconButton>
                   }
                 /> */}
-              </GridListTile>
-            ))}
-          </GridList>
-        </div>
-      );
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+    );
   };
 
   return <div>{imageArr ? displayImages(imageArr) : <Progress />}</div>;

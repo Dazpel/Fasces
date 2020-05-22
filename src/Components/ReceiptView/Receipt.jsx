@@ -100,7 +100,7 @@ export default class Receipt extends Component {
           <ReceiptTable />
         </div>
 
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="center" alignItems="center" className='receiptBtn'>
           <Button
             variant="contained"
             color="primary"

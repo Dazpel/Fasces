@@ -6,8 +6,12 @@
     margin-left: 10px !important;
 }
 
+.folderBtn{
+    height: 20vh !important;
+}
+
 .folderContainer {
-    height: 70vh;
+    height: 80vh;
 }
 
 .folderView{
