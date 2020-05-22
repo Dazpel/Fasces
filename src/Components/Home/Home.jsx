@@ -21,14 +21,15 @@ export default class Home extends Component {
   };
 
   render() {
-    console.log(this.props.currentUser);
     //LOG OUT FUNCTION HANDLER
     const goToChat = () => {
       this.props.history.push('/home/chat');
-      console.log(this.props.currentUser);
     };
     const goToImage = () => {
       this.props.history.push('/home/image');
+    };
+    const goToReceipt = () => {
+      this.props.history.push('/home/receipt');
     };
 
     return (
@@ -52,10 +53,10 @@ export default class Home extends Component {
         <hr />
         <div>
           <ChatIcon />
-          <button onClick={goToChat}>go to chat</button>
-          <button onClick={this.goToGroups}>go to groups</button>
-          <button onClick={goToChat}>go to chat</button>
-          <button onClick={goToImage}>check img</button>
+          <button onClick={goToChat}>My chat</button>
+          <button onClick={this.goToGroups}>My groups</button>
+          <button onClick={goToReceipt}>Receipts</button>
+          <button onClick={goToImage}>Images</button>
           {this.printGroups()}
         </div>
         <hr />
