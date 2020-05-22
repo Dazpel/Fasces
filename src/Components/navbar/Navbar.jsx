@@ -7,6 +7,7 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import HomeIcon from '@material-ui/icons/Home'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
+import ReceiptIcon from '@material-ui/icons/Receipt'
 import { Link } from 'react-router-dom'
  
 
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   
     return (
 
-        <AppBar position="fixed" color="white" className={classes.appBar}>
+        <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
         <BottomNavigation 
       value={value}
@@ -54,11 +55,12 @@ const useStyles = makeStyles((theme) => ({
         setValue(newValue);
       }}
       className={classes.grow}
-      style={{backgroundColor: 'white'}}
+      style={{backgroundColor: 'inherit'}}
     >
       <BottomNavigationAction style={{color: '#0095ff'}} label="Home" icon={<Link to="/" style={{color: '#0095ff'}}><HomeIcon /></Link>} />
       <BottomNavigationAction style={{color: '#0095ff'}} label="Payments" icon={<Link to='/Calculate' style={{color: '#0095ff'}}><MoneyIcon /></Link>} />
       <BottomNavigationAction style={{color: '#0095ff'}} label="Images" icon={<PhotoLibraryIcon />} />
+      <BottomNavigationAction style={{color: '#0095ff'}} label="Receipts" icon={<Link to='/home/receipt' style={{color: '#0095ff'}}><ReceiptIcon /></Link>} />
       </BottomNavigation>
         </Toolbar>
       </AppBar>
