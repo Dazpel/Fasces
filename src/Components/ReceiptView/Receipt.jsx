@@ -9,6 +9,8 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
 import './receipt.css'
+import Navbar from '../navbar/Navbar';
+import Topbar from '../navbar/Topbar';
 
 //API KEY FOR OCR SCAN
 let MY_URL_KEY = '31bb9650994211eab7efc1191d38e165';
@@ -94,9 +96,10 @@ export default class Receipt extends Component {
   render() {
     return (
       <div>
+      <Topbar/>
         <ReceiptTable  />
         <Grid container justify="center" alignItems="center" >
-        <Button
+        <Button style={{backgroundColor: "#0095ff"}}
         variant="contained"
         color="primary"
         size="small"
@@ -115,7 +118,7 @@ export default class Receipt extends Component {
         onChange={(e) => this.handleFileUpload(e)}
       />
       <label htmlFor="contained-button-file">
-         <Button
+         <Button style={{color: "#0095ff"}}
         variant="contained"
         color="default"
         size="small"
@@ -128,7 +131,7 @@ export default class Receipt extends Component {
       </Button>
       </label>
         </Grid>
-
+        <Navbar/>
       </div>
     );
   }

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { auth } from '../firebase/firebase.utils';
 import Navbar from '../navbar/Navbar';
 import Topbar from '../navbar/Topbar';
-import {Link } from 'react-router-dom';
-import axios from 'axios';
-import { Switch, Route } from 'react-router-dom';
+import ChatIcon from '@material-ui/icons/QuestionAnswer'
+import { Link } from 'react-router-dom'
+
 
 
 
@@ -13,29 +12,26 @@ export default class Home extends Component {
   
 
   render() {
-    // console.log(this.props.currentUser);
+    console.log(this.props.currentUser);
     //LOG OUT FUNCTION HANDLER
-    const logOut = () => {
-      auth.signOut();
-      this.props.history.push('/login');
-    };
-    const goToReceipt = () => {
-      
-      this.props.history.push('/home/receipt');
-    };
     const goToChat = () => {
       this.props.history.push('/home/chat');
+      console.log(this.props.currentUser)
     }
 
     return (
       <div>
-      <Topbar logOut={this.logOut}/>
-        Home page, it means we are log in.
+      <Topbar/>
+    
+        <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1>
         <div>
-          <button onClick={logOut}>Log Out</button>
-          <button onClick={goToReceipt}>go to receipt</button>
-          <button onClick={goToChat}>go to chat</button>
+          <h2>Groups</h2><Link to='/'><p>Start a group</p></Link>
         </div>
+        <hr/>
+        <div>
+          <ChatIcon/><button onClick={goToChat}>go to chat</button>
+        </div>
+        <hr/>
         <Navbar/>
       </div>
     );

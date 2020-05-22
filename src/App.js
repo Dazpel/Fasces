@@ -7,7 +7,7 @@ import {
 import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
-import Navbar from './Components/navbar/Navbar'
+// import Navbar from './Components/navbar/Navbar'
 import Chat from './Components/Chat/Chat';
 import Receipt from './Components/ReceiptView/Receipt';
 
