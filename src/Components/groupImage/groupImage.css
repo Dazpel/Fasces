@@ -1,0 +1,20 @@
+.uploadFile {
+    display: none !important;
+}
+
+.groupBtn{
+    margin-left: 10px !important;
+}
+
+.folderContainer {
+    height: 70vh;
+}
+
+.folderView{
+    padding: 20px;
+    height: 100%;
+}
+
+.receipTable-expenses{
+    margin-top:10px;
+}

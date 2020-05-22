@@ -10,10 +10,10 @@ import LogIn from './Components/LogIn/LogIn';
 import Navbar from './Components/navbar/Navbar'
 import Chat from './Components/Chat/Chat';
 import Receipt from './Components/ReceiptView/Receipt';
-
 import Calculate from './Components/Algorithm/Calculate'
 import ProfileView from './Components/Profile/ProfileView'
 import AccountView from './Components/Profile/AccountView'
+import GroupImage from './Components/groupImage/GroupImage';
 
 export default class App extends Component {
   state = {
@@ -71,6 +71,11 @@ export default class App extends Component {
             exact
             path="/home/receipt"
             component={(props) => <Receipt {...props}/>}
+            />
+            <Route
+            exact
+            path="/home/image"
+            component={(props) => <GroupImage {...props}/>}
             />
             <Route
             path="/Calculate"

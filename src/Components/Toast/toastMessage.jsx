@@ -38,7 +38,7 @@ export default function ToastMessage() {
     <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Image uploaded successfully!
+          Success, ready to save!
         </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>

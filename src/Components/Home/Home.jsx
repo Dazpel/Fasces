@@ -9,6 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 
 
 
+
 export default class Home extends Component {
   
 
@@ -26,6 +27,9 @@ export default class Home extends Component {
     const goToChat = () => {
       this.props.history.push('/home/chat');
     }
+    const goToImage = () => {
+      this.props.history.push('/home/image');
+    }
 
     return (
       <div>
@@ -35,6 +39,7 @@ export default class Home extends Component {
           <button onClick={logOut}>Log Out</button>
           <button onClick={goToReceipt}>go to receipt</button>
           <button onClick={goToChat}>go to chat</button>
+          <button onClick={goToImage}>check img</button>
         </div>
         <Navbar/>
       </div>
