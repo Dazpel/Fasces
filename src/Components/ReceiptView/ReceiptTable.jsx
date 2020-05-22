@@ -4,7 +4,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Progress from '../progress/Progress';
+import Grid from '@material-ui/core/Grid';
+import ImageModal from './receiptImageModal'
 import { Link } from 'react-router-dom';
 import {
   saveReceipt,
@@ -12,16 +15,16 @@ import {
   updateReceiptArr,
   sentinel,
 } from '../firebase/firebase.utils';
-import './receipt.css'
+import './receipt.css';
 
 export default class ReceiptTable extends Component {
   state = {
     imageArr: '',
+    
   };
 
   updateArr = async () => {
-
-    console.log('beign called')
+    console.log('beign called');
 
     try {
       let list = await receiptListArr();
@@ -46,11 +49,11 @@ export default class ReceiptTable extends Component {
 
   render() {
     const { imageArr } = this.state;
+    let expenses = 0
 
     const receipTable = (list) => {
-
       return (
-        <div className='receipTable'>
+        <div className="receipTable">
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -65,9 +68,10 @@ export default class ReceiptTable extends Component {
             </TableHead>
             <TableBody>
               {list.map((el, i) => (
+                (expenses+=el.amount),
                 <TableRow key={el.id}>
                   <TableCell className="bold">
-                    <a href={el.url}>{`Receipt ${i}`}</a>
+                  <ImageModal url={el.url} btnName={`Receipt ${i}`} />
                   </TableCell>
                   <TableCell align="right">{el.createdAt}</TableCell>
                   <TableCell align="right">{el.amount}</TableCell>
@@ -75,6 +79,12 @@ export default class ReceiptTable extends Component {
               ))}
             </TableBody>
           </Table>
+          <Grid container justify="center" alignItems="center" className='receipTable-expenses'>
+          <Typography variant="subtitle1" gutterBottom>
+       {`Current expenses: ${expenses}$`}
+      </Typography>
+          </Grid>
+          
         </div>
       );
     };

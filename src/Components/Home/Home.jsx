@@ -9,6 +9,23 @@ import { Link } from 'react-router-dom'
 
 
 export default class Home extends Component {
+
+
+  goToGroups = () => {
+    console.log('run')
+    this.props.history.push('/groups');
+  }
+
+  printGroups = () => {
+    return this.props.currentUser.trackStock.map(ele => {
+      return (
+        <div>
+          <Link to={`/chat/${ele}`} >go to chat {ele}</Link>
+        </div>
+      )
+    })
+  }
+
   
 
   render() {
@@ -17,6 +34,9 @@ export default class Home extends Component {
     const goToChat = () => {
       this.props.history.push('/home/chat');
       console.log(this.props.currentUser)
+    }
+    const goToImage = () => {
+      this.props.history.push('/home/image');
     }
 
     return (
@@ -30,6 +50,12 @@ export default class Home extends Component {
         <hr/>
         <div>
           <ChatIcon/><button onClick={goToChat}>go to chat</button>
+        
+          <button onClick={this.goToGroups}>go to groups</button>
+         
+          <button onClick={goToChat}>go to chat</button>
+          <button onClick={goToImage}>check img</button>
+          {this.printGroups()}
         </div>
         <hr/>
         <Navbar/>

@@ -6,6 +6,19 @@
     margin-left: 10px !important;
 }
 
+.table {
+    height: 80vh;
+}
+
+.receiptBtn{
+    height: 20vh !important;
+}
+
 .receipTable{
-    height: 70vh;
+    padding: 20px;
+    height: 100%;
+}
+
+.receipTable-expenses{
+    margin-top:10px;
 }

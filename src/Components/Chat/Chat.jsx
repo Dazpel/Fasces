@@ -15,7 +15,6 @@ export default class Chat extends Component {
   async componentDidMount() {
     const setParticipants = (users, currentUser) => {
       let x = [];
-
       users.map((el, i) => {
         if (el.id !== currentUser) {
           x.push(
@@ -55,9 +54,14 @@ export default class Chat extends Component {
 
       let participants = setParticipants(this.state.groupUsers, currentUser.id);
 
+      // var conversation = window.talkSession.getOrCreateConversation(
+      //   `splitexproject3`
+      // );
+
       var conversation = window.talkSession.getOrCreateConversation(
-        'splitexproject3'
+        this.props.match.params.id
       );
+
       conversation.setParticipant(me);
 
       participants.map((el) => {
