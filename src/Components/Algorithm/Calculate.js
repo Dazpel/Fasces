@@ -1,4 +1,20 @@
-<<<<<<< HEAD
+import React, { Component } from 'react';
+import Navbar from '../navbar/Navbar'
+import Topbar from '../navbar/Topbar'
+class Calculate extends Component {
+    render() {
+        return (
+            <div className='App'>
+                <Topbar/>
+                BILLY BRAINS CALCULATIONS (U#))JQFJALKAS2029lol
+                <Navbar/>
+            </div>
+        );
+    }
+}
+
+export default Calculate;
+
 let x = [
     {
         name: 'Billy',
@@ -43,21 +59,8 @@ for(let i = 0; i < x.length; i++)
         console.log(x[i].name + ' has paid!')
       }
 }
-=======
-import React, { Component } from 'react';
-import Navbar from '../navbar/Navbar'
-import Topbar from '../navbar/Topbar'
-class Calculate extends Component {
-    render() {
-        return (
-            <div className='App'>
-                <Topbar/>
-                BILLY BRAINS CALCULATIONS (U#))JQFJALKAS2029lol
-                <Navbar/>
-            </div>
-        );
-    }
-}
 
-export default Calculate;
->>>>>>> 745276910a27315ad2bffe4126ac31b0e6f9f5e3
+
+  
+
+

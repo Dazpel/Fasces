@@ -7,7 +7,8 @@ import {
 import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
-
+import Groups from './Components/Groups/Groups';
+import CreateGroup from './Components/Groups/CreateGroup'
 import Chat from './Components/Chat/Chat';
 import Calculate from './Components/Algorithm/Calculate'
 
@@ -59,7 +60,7 @@ export default class App extends Component {
         <Switch>
           <Route
             exact
-            path="/chat"
+            path="/chat/:id"
             component={(props) => <Chat {...props} currentUser={this.state.currentUser} />}
           />
           <Route
@@ -68,6 +69,7 @@ export default class App extends Component {
             component={(props) => <Calculate {...props} currentUser={this.state.currentUser} />}
           />
           <Route
+            exact
             path="/"
             component={(props) =>
               isData ? (
@@ -81,6 +83,16 @@ export default class App extends Component {
             exact
             path="/login"
             component={(props) => <LogIn {...props} />}
+          />
+          <Route
+            exact
+            path="/groups"
+            component={(props) => <Groups {...props} currentUser={this.state.currentUser}/>}
+          />
+          <Route
+            exact
+            path="/creategroup"
+            component={(props) => <CreateGroup {...props} currentUser={this.state.currentUser}/>}
           />
         </Switch>
       </div>

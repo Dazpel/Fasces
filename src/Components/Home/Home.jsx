@@ -31,9 +31,24 @@ export default class Home extends Component {
       });
   };
 
-  goToChat = () => {
+  goToChat = (room) => {
     console.log('run')
-    this.props.history.push('/chat');
+    this.props.history.push(`/chat/${room}`);
+  }
+
+  goToGroups = () => {
+    console.log('run')
+    this.props.history.push('/groups');
+  }
+
+  printGroups = () => {
+    return this.props.currentUser.trackStock.map(ele => {
+      return (
+        <div>
+          <Link to={`/chat/${ele}`} >go to chat {ele}</Link>
+        </div>
+      )
+    })
   }
 
   render() {
@@ -43,7 +58,6 @@ export default class Home extends Component {
       auth.signOut();
       this.props.history.push('/login');
     };
-
     return (
       <div>
       <Topbar logOut={this.logOut}/>
@@ -52,6 +66,8 @@ export default class Home extends Component {
           <button onClick={logOut}>Log Out</button>
           <button onClick={this.getReceiptData}>test receipt</button>
           <button onClick={this.goToChat}>go to chat</button>
+          <button onClick={this.goToGroups}>go to groups</button>
+          {this.printGroups()}
         </div>
         <Navbar/>
       </div>
