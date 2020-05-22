@@ -10,15 +10,14 @@ import GroupSearch from '../Groups/Groups'
 
 
 export default class Home extends Component {
-
-
   goToGroups = () => {
-    console.log('run')
+    console.log('run');
     this.props.history.push('/groups');
-  }
+  };
 
   printGroups = () => {
-    return this.props.currentUser.trackStock.map(ele => {
+    console.log('running')
+    return this.props.currentUser.trackStock.map((ele) => {
       return (
         <Link to={`/chat/${ele}`} style={{color:'white', textDecoration: 'none'}}><div style={{color:'white', backgroundColor: '#0095ff'}}>
           <ChatIcon/> {ele}
@@ -31,15 +30,16 @@ export default class Home extends Component {
   
 
   render() {
-    console.log(this.props.currentUser);
     //LOG OUT FUNCTION HANDLER
     const goToChat = () => {
       this.props.history.push('/home/chat');
-      console.log(this.props.currentUser)
-    }
+    };
     const goToImage = () => {
       this.props.history.push('/home/image');
-    }
+    };
+    const goToReceipt = () => {
+      this.props.history.push('/home/receipt');
+    };
 
     return (
       <div>
