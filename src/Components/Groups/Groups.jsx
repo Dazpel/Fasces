@@ -50,7 +50,7 @@ class Groups extends Component {
         return this.state.userGroups.map(element => {
                 return(
                 <div>
-                    <button onClick={(element) => this.joinGroup(element)}>{element}</button>
+                    <button onClick={() => this.joinGroup(element)}>{element}</button>
                 </div>
                 )
             })

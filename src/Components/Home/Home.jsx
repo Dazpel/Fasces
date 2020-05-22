@@ -11,6 +11,7 @@ export default class Home extends Component {
   };
 
   printGroups = () => {
+    console.log('running')
     return this.props.currentUser.trackStock.map((ele) => {
       return (
         <div>
