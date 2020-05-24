@@ -41,7 +41,7 @@ export default function MenuAppBar() {
       <AppBar position="static" style={{backgroundColor: 'white'}}>
         <Toolbar>
           <Typography variant="h6" className={classes.title} style={{color:'#0095ff', fontFamily: 'Comic Sans MS, cursive, sans-serif'}}>
-            SPLITEX
+          <Link to='/newhome' style={{textDecoration: 'none', color:'#0095ff'}}>SPLITEX</Link>
           </Typography>
           {auth && (
             <div>
