@@ -39,11 +39,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 20,
   },
   title: {
-    color: "#fff",
+    color: '#fff',
     letterSpacing: '4.5px',
     textShadow: '2px 2px 10px #7d7a7a',
-  }
-  
+  },
 }));
 
 export default function LogIn({ history }) {
@@ -60,11 +59,15 @@ export default function LogIn({ history }) {
 
   const classes = useStyles();
   return (
-    <Grid container justify="center" alignItems="center" className='gradient'>
-      <Typography variant="h2" className={classes.title} gutterBottom>
-        Splitex
-      </Typography>
-      <GoogleButton onClick={authGoogle} />
+    <Grid container justify="center" alignItems="center" className="gradient">
+      <div>
+        <Typography variant="h2" className={classes.title} gutterBottom>
+          Splitex
+        </Typography>
+      </div>
+      <div>
+        <GoogleButton onClick={authGoogle} />
+      </div>
     </Grid>
   );
 }
