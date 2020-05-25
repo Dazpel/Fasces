@@ -18,6 +18,7 @@ import ProfileView from './Components/Profile/ProfileView';
 import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
 import Trip from './Components/Trip/trip'
+import NewHome from './Components/NewHome/NewHome'
 
 export default class App extends Component {
   state = {
@@ -65,6 +66,13 @@ export default class App extends Component {
     return (
       <div>
         <Switch>
+        <Route
+            exact
+            path="/newhome"
+            component={(props) => (
+              <NewHome {...props}/>
+            )}
+          />
           <Route
             exact
             path="/chat/:id"
