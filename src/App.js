@@ -17,6 +17,7 @@ import Calculate from './Components/Algorithm/Calculate';
 import ProfileView from './Components/Profile/ProfileView';
 import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
+import Trip from './Components/Trip/trip'
 
 export default class App extends Component {
   state = {
@@ -106,7 +107,7 @@ export default class App extends Component {
             path="/"
             component={(props) =>
               isData ? (
-                <Home {...props} currentUser={currentUser} />
+                <Trip {...props} currentUser={currentUser} />
               ) : (
                 <LogIn {...props} />
               )

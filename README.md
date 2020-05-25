@@ -4,3 +4,5 @@ Web App for group trips, an all in one solution that allows you to create group 
 ## Developed Using:
 
 React.js, Styled Components, JavaScript, CSS, Authentication, Firebase API, Node.Js, MongoDB, Mongoose.
+
+

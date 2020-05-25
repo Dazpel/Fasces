@@ -30,7 +30,7 @@ export default class Home extends Component {
   
 
   render() {
-    //LOG OUT FUNCTION HANDLER
+    
     const goToChat = () => {
       this.props.history.push('/home/chat');
     };
