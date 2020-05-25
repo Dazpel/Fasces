@@ -24,9 +24,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     const { displayName, email, photoURL } = userAuth;
     const createdAt = new Date();
     const trackStock = [];
+    const activeTrip = false;
 
     try {
       await userRef.set({
+        activeTrip,
         displayName,
         email,
         photoURL,
@@ -40,6 +42,55 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
+
+
+//CREATE A NEW TRIP INSTANCE WITH ALL COMPOENTS EMPY
+export const createNewTrip = async (user, tripName, id) => {
+  const tripRef = firestore.doc(`trips/${id}`);
+
+  const snapShot = await tripRef.get();
+
+  if (!snapShot.exists) {
+    const { email } = user;
+    const createdAt = new Date();
+    const tripImages = [];
+    const tripReceipts = []
+    const isActive = true;
+    const users = [email]
+
+    try {
+      await tripRef.set({
+        isActive,
+        createdAt,
+        tripName,
+        tripImages,
+        tripReceipts,
+        users
+      });
+      //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
+      await updateTripStatus(user.id)
+    } catch (error) {
+      console.log('error creating trip', error.message);
+    }
+  }
+
+}
+
+
+//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
+const updateTripStatus = async (userID) => {
+
+  let user = await firestore.collection('users').doc(userID);
+
+  try {
+    user.update({
+      activeTrip: true,
+    });
+  } catch (error) {
+    console.log('Error adding stock', error);
+  }
+
+}
 
 export const userList = async () => {
   let userArr = [];
@@ -95,6 +146,8 @@ export const receiptListArr = async (updateFunc) => {
 
   return receiptArr;
 };
+
+
 
 export const updateReceiptArr = async (id, imgURL, imgAmount) => {
   const docID = '4mcO13n8lUBeSezFmLD1';

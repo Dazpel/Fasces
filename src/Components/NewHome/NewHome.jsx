@@ -4,7 +4,7 @@ class NewHome extends Component {
     render() {
         return (
             <div class='App'>
-                Here will be two buttons
+                NEW HOME, RENDER CHAT AND ALL THAT
                 <br/>
                 <button style={{backgroundColor:'lightgreen'}}>Join Group</button>
                 <br/>
