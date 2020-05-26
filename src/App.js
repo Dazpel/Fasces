@@ -38,7 +38,7 @@ export default class App extends Component {
         //If logged in, retrieve the data from user and set it to State
         const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot((snapShot) => {
+       await userRef.onSnapshot((snapShot) => {
           let status = snapShot.data()
           this.setState({
             currentUser: {
@@ -46,7 +46,7 @@ export default class App extends Component {
               ...snapShot.data(),
             },
             isData: true,
-            onTrip: status.isActive
+            onTrip: status.activeTrip
           });
         });
       }
@@ -66,7 +66,6 @@ export default class App extends Component {
 
   render() {
     const { currentUser, isData, onTrip } = this.state;
-    console.log(onTrip)
     return (
       <div>
         <Switch>
@@ -87,12 +86,12 @@ export default class App extends Component {
           <Route
             exact
             path="/home/receipt"
-            component={(props) => <Receipt {...props} />}
+            component={(props) => <Receipt {...props} currentUser={this.state.currentUser}/>}
           />
           <Route
             exact
             path="/home/image"
-            component={(props) => <GroupImage {...props} />}
+            component={(props) => <GroupImage {...props} currentUser={this.state.currentUser}/>}
           />
           <Route
             path="/Calculate"

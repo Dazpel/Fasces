@@ -104,7 +104,7 @@ export default class Receipt extends Component {
     return (
       <div>
         <div className="table">
-          <ReceiptTable />
+          <ReceiptTable currentUser={this.props.currentUser}/>
         </div>
 
         <Grid container justify="center" alignItems="center" className='receiptBtn'>

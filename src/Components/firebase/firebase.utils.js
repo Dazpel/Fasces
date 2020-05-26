@@ -43,7 +43,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-
 //CREATE A NEW TRIP INSTANCE WITH ALL COMPOENTS EMPY
 export const createNewTrip = async (user, tripName, id) => {
   const tripRef = firestore.doc(`trips/${id}`);
@@ -54,9 +53,9 @@ export const createNewTrip = async (user, tripName, id) => {
     const { email } = user;
     const createdAt = new Date();
     const tripImages = [];
-    const tripReceipts = []
+    const tripReceipts = [];
     const isActive = true;
-    const users = [email]
+    const users = [email];
 
     try {
       await tripRef.set({
@@ -65,32 +64,45 @@ export const createNewTrip = async (user, tripName, id) => {
         tripName,
         tripImages,
         tripReceipts,
-        users
+        users,
       });
       //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-      await updateTripStatus(user.id)
+      await updateTripStatus(user.id, id);
     } catch (error) {
       console.log('error creating trip', error.message);
     }
   }
-
-}
-
+};
 
 //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-const updateTripStatus = async (userID) => {
-
+const updateTripStatus = async (userID, tripID) => {
   let user = await firestore.collection('users').doc(userID);
 
   try {
     user.update({
       activeTrip: true,
+      trips: firebase.firestore.FieldValue.arrayUnion(tripID),
+      currentTrip: tripID,
     });
   } catch (error) {
     console.log('Error adding stock', error);
   }
+};
 
-}
+export const retrieveImages = async (user) => {
+  const { currentTrip } = user;
+  let tripData = [];
+
+  try {
+    let ref = await firestore.collection('trips').doc(currentTrip).get();
+    let data = await ref.data();
+    tripData = data.tripImages;
+  } catch (err) {
+    console.log(err);
+  }
+
+  return tripData;
+};
 
 export const userList = async () => {
   let userArr = [];
@@ -125,18 +137,18 @@ const sentinel = async (data, upF) => {
   );
 };
 
-export const receiptListArr = async (updateFunc) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
+export const receiptListArr = async (updateFunc, user) => {
+  const { currentTrip } = user;
   var receiptArr = [];
-  let arrRef = await firestore.collection('images').doc(docID);
+  let arrRef = await firestore.collection('trips').doc(currentTrip);
   let getDoc = await arrRef
     .get()
     .then((doc) => {
       if (!doc.exists) {
         console.log('No such document!');
       } else {
-        receiptArr = doc.data().receiptImg;
-
+        receiptArr = doc.data().tripReceipts;
+        console.log(receiptArr)
         sentinel(receiptArr, updateFunc);
       }
     })
@@ -146,8 +158,6 @@ export const receiptListArr = async (updateFunc) => {
 
   return receiptArr;
 };
-
-
 
 export const updateReceiptArr = async (id, imgURL, imgAmount) => {
   const docID = '4mcO13n8lUBeSezFmLD1';

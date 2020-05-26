@@ -38,7 +38,7 @@ export default class ReceiptTable extends Component {
 
   async componentDidMount() {
     try {
-      let list = await receiptListArr(this.updateArr);
+      let list = await receiptListArr(this.updateArr, this.props.currentUser);
       this.setState({
         imageArr: list,
       });

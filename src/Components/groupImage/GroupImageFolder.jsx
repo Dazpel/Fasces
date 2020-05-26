@@ -44,9 +44,9 @@ export default function GroupImageFolder({ imageArr }) {
         <div className={classes.title}>My Trip</div>
 
         <GridList cellHeight={180} className={classes.gridList}>
-          {list.map((tile) => (
-            <GridListTile key={tile._id}>
-              <img src={tile.imageUrl} alt={tile._id} />
+          {list.map((tile, i) => (
+            <GridListTile key={i}>
+              <img src={tile} alt={i} />
               {/* <GridListTileBar
                   title={tile.title}
                   subtitle={<span>by: {tile.author}</span>}

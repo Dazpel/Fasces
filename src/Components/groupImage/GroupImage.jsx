@@ -6,6 +6,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
 import ToastMessage from '../Toast/toastMessage';
 import actions from '../../RouteContainer/axiosCalls';
+import { retrieveImages } from '../firebase/firebase.utils';
+import Progress from '../progress/Progress';
 import './groupImage.css';
 
 export default class GroupImage extends Component {
@@ -15,16 +17,18 @@ export default class GroupImage extends Component {
     saved: false,
   };
 
-  updateArr = async () => {
-    let arr = await actions.imageList();
+  updateArr = async (user) => {
+    let arr = await retrieveImages(user);
+    
 
     this.setState({
-      imageArr: arr.data,
+      imageArr: arr,
     });
   };
 
   componentDidMount() {
-    this.updateArr();
+  this.updateArr(this.props.currentUser, this.state.imageArr)
+
   }
 
   // this method handles just the file upload
@@ -67,6 +71,7 @@ export default class GroupImage extends Component {
     onSaved ? (onSaved = true) : (onSaved = false);
 
     const { imageArr } = this.state;
+    
     return (
       <div>
         <div className="folderContainer">
@@ -113,6 +118,7 @@ export default class GroupImage extends Component {
         {onUp ? <ToastMessage message={'Success, ready to save!'} /> : ''}
         {onSaved ? <ToastMessage message={'Image saved!'} /> : ''}
       </div>
+     
     );
   }
 }
