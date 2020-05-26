@@ -17,11 +17,14 @@ import Calculate from './Components/Algorithm/Calculate';
 import ProfileView from './Components/Profile/ProfileView';
 import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
+import Trip from './Components/Trip/trip'
+import NewHome from './Components/NewHome/NewHome'
 
 export default class App extends Component {
   state = {
     currentUser: '',
     isData: false,
+    onTrip: false,
   };
 
   //method to set session to null.
@@ -36,12 +39,14 @@ export default class App extends Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
+          let status = snapShot.data()
           this.setState({
             currentUser: {
               id: snapShot.id,
               ...snapShot.data(),
             },
             isData: true,
+            onTrip: status.isActive
           });
         });
       }
@@ -60,10 +65,18 @@ export default class App extends Component {
   /* START OF TRACK IF USER LOGGED IN OR NOT, PASS DOWN TO ALL COMPONENTS */
 
   render() {
-    const { currentUser, isData } = this.state;
+    const { currentUser, isData, onTrip } = this.state;
+    console.log(onTrip)
     return (
       <div>
         <Switch>
+        <Route
+            exact
+            path="/newhome"
+            component={(props) => (
+              <NewHome {...props} currentUser={currentUser}/>
+            )}
+          />
           <Route
             exact
             path="/chat/:id"
@@ -105,9 +118,11 @@ export default class App extends Component {
             exact
             path="/"
             component={(props) =>
-              isData ? (
-                <Home {...props} currentUser={currentUser} />
-              ) : (
+              isData 
+              ? (
+                onTrip ?  <NewHome {...props} currentUser={currentUser}/> : <Trip {...props} currentUser={currentUser} /> 
+              ) 
+              : (
                 <LogIn {...props} />
               )
             }

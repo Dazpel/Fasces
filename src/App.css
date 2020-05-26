@@ -37,3 +37,21 @@
     transform: rotate(360deg);
   }
 }
+
+.tripContainer {
+  height: 100vh;
+}
+
+.tripContainer-btns {
+  height: 30%;
+  display: grid;
+  
+
+}
+
+.tripContainer-header {
+  display: block;
+  padding: 15px;
+  text-align: justify;
+  margin-bottom: 5rem;
+}

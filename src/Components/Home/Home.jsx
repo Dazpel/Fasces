@@ -30,7 +30,7 @@ export default class Home extends Component {
   
 
   render() {
-    //LOG OUT FUNCTION HANDLER
+    
     const goToChat = () => {
       this.props.history.push('/home/chat');
     };
@@ -43,20 +43,32 @@ export default class Home extends Component {
 
     return (
       <div>
-      <Topbar/>
+        <Topbar />
         <div>
-        {/* <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1> */}
-        <div style={{marginLeft:'10px', marginRight: '10px'}}>
-        <Link to='/creategroup' style={{color:"#0095ff"}} ><h5 style={{textAlign: 'end',marginBottom:'0', marginTop: '3px'}}>Start a group</h5></Link>
-          <h2 style={{marginTop: '0', color:"#0095ff", marginBottom:'0'}}>Groups</h2>
-          <GroupSearch currentUser={this.props.currentUser}/>
+          {/* <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1> */}
+          <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+            <Link to="/creategroup" style={{ color: "#0095ff" }}>
+              <h5
+                style={{
+                  textAlign: "end",
+                  marginBottom: "0",
+                  marginTop: "3px",
+                }}
+              >
+                Start a group
+              </h5>
+            </Link>
+            <h2 style={{ marginTop: "0", color: "#0095ff", marginBottom: "0" }}>
+              Groups
+            </h2>
+            <GroupSearch currentUser={this.props.currentUser} />
+          </div>
         </div>
-        </div>
-        <div style={{marginLeft:'10px', marginRight: '10px'}}>        
-          <hr style={{borderColor: 'white', marginBottom: '0'}}/>
+        <div style={{ marginLeft: "10px", marginRight: "10px" }}>
+          <hr style={{ borderColor: "white", marginBottom: "0" }} />
           {this.printGroups()}
         </div>
-        <Navbar/>
+        <Navbar />
       </div>
     );
   }
