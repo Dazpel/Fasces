@@ -91,17 +91,17 @@ const updateTripStatus = async (userID, tripID) => {
 
 export const retrieveImages = async (user) => {
   const { currentTrip } = user;
-  let tripData = [];
+  let tripImages = [];
 
   try {
     let ref = await firestore.collection('trips').doc(currentTrip).get();
     let data = await ref.data();
-    tripData = data.tripImages;
+    tripImages = data.tripImages;
   } catch (err) {
     console.log(err);
   }
 
-  return tripData;
+  return tripImages.reverse();
 };
 
 export const userList = async () => {
@@ -116,17 +116,41 @@ export const userList = async () => {
   }
 };
 
-const sentinel = async (data, upF) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
+export const updateImageArr = async (url, tripID) => {
 
-  let doc = await firestore.collection('images').doc(docID);
+  const docID = tripID;
+  let imageArr = await firestore.collection('trips').doc(docID);
+  const date = new Date();
+  const createdAt = date.toDateString();
+  // let item = {
+  //   url: url,
+  //   id: id,
+  //   createdAt: createdAt,
+  //   amount: imgAmount,
+  // };
+
+  try {
+    imageArr.update({
+      tripImages: firebase.firestore.FieldValue.arrayUnion(url),
+    });
+  } catch (error) {
+    console.log('Error adding image', error);
+  }
+
+}
+
+
+const sentinel = async (data, upF, currentTrip) => {
+  const docID = currentTrip;
+
+  let doc = await firestore.collection('trips').doc(docID);
 
   let observer = await doc.onSnapshot(
     async (docSnapshot) => {
       let getDoc = await doc.get().then(async (doc) => {
         if (!doc.exists) {
           console.log('No such document!');
-        } else if (data.length !== doc.data().receiptImg.length) {
+        } else if (data.length !== doc.data().tripReceipts.length) {
           upF();
         }
       });
@@ -137,7 +161,7 @@ const sentinel = async (data, upF) => {
   );
 };
 
-export const receiptListArr = async (updateFunc, user) => {
+export const receiptListArr = async (user, updateFunc) => {
   const { currentTrip } = user;
   var receiptArr = [];
   let arrRef = await firestore.collection('trips').doc(currentTrip);
@@ -149,7 +173,7 @@ export const receiptListArr = async (updateFunc, user) => {
       } else {
         receiptArr = doc.data().tripReceipts;
         console.log(receiptArr)
-        sentinel(receiptArr, updateFunc);
+        sentinel(receiptArr, updateFunc, currentTrip);
       }
     })
     .catch((err) => {
@@ -159,9 +183,9 @@ export const receiptListArr = async (updateFunc, user) => {
   return receiptArr;
 };
 
-export const updateReceiptArr = async (id, imgURL, imgAmount) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
-  let receiptArr = await firestore.collection('images').doc(docID);
+export const updateReceiptArr = async (id, imgURL, imgAmount, tripID) => {
+  const docID = tripID;
+  let receiptArr = await firestore.collection('trips').doc(docID);
   const date = new Date();
   const createdAt = date.toDateString();
   let item = {
@@ -173,7 +197,7 @@ export const updateReceiptArr = async (id, imgURL, imgAmount) => {
 
   try {
     receiptArr.update({
-      receiptImg: firebase.firestore.FieldValue.arrayUnion(item),
+      tripReceipts: firebase.firestore.FieldValue.arrayUnion(item),
     });
   } catch (error) {
     console.log('Error adding stock', error);

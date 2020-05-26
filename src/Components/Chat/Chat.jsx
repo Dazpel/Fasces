@@ -59,7 +59,7 @@ export default class Chat extends Component {
       // );
 
       var conversation = window.talkSession.getOrCreateConversation(
-        this.props.match.params.id
+        this.props.chatID
       );
 
       conversation.setParticipant(me);

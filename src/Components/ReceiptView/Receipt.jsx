@@ -22,14 +22,15 @@ export default class Receipt extends Component {
 
   //IN THIS FUNCTION WE MAKE A CALL TO THE ACR SCAN API AND WE PASS THE DATA WE RECIEVE TO
   //FIREBASE FOR STORAGE
-  getReceiptData = async ({ url, id }) => {
+  getReceiptData = async (urlImage, currentTrip) => {
+    const { url, id } = urlImage
     let file = {
       url: url,
       headers: {
         'x-custom-key': 'string',
       },
     };
-
+    
     axios
       .post('https://api.taggun.io/api/receipt/v1/simple/url', file, {
         headers: {
@@ -38,7 +39,7 @@ export default class Receipt extends Component {
       })
       .then(function (response) {
         //  IF SUCCESSFULL SAVE THE DATA TO FIREBASE
-        updateReceiptArr(id, url, response.data.totalAmount.data);
+        updateReceiptArr(id, url, response.data.totalAmount.data, currentTrip);
       })
       .catch(function (error) {
         console.log(error);
@@ -53,8 +54,8 @@ export default class Receipt extends Component {
   };
 
   //TRIGGER THE OCR SCAN FUNCTION
-  uploadAndScan = async (url) => {
-    await this.getReceiptData(url);
+  uploadAndScan = async (url, currentTrip) => {
+    await this.getReceiptData(url, currentTrip);
   };
 
   //UPLOAD FILE TO CLOUDINARY AND GET THE IMG URL AND ID
@@ -96,6 +97,7 @@ export default class Receipt extends Component {
   };
 
   render() {
+    const {currentTrip} = this.props.currentUser
     let onUp = false;
     let onSaved = this.state.saved;
     (this.state.imageUrl===undefined) ? onUp = false : onUp=true;
@@ -114,7 +116,7 @@ export default class Receipt extends Component {
             size="small"
             // className={classes.button}
             startIcon={<SaveIcon />}
-            onClick={() => this.uploadAndScan(this.state.imageUrl)}
+            onClick={() => this.uploadAndScan(this.state.imageUrl, currentTrip)}
           >
             Save
           </Button>

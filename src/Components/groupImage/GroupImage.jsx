@@ -6,7 +6,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
 import ToastMessage from '../Toast/toastMessage';
 import actions from '../../RouteContainer/axiosCalls';
-import { retrieveImages } from '../firebase/firebase.utils';
+import { retrieveImages, updateImageArr } from '../firebase/firebase.utils';
 import Progress from '../progress/Progress';
 import './groupImage.css';
 
@@ -53,15 +53,17 @@ export default class GroupImage extends Component {
   };
 
   // THIS METHOD ADDS THE IMAGE TO THE LIST
-  handleSubmit = async () => {
-    await actions.uploadToDB(this.state);
+  handleSubmit = async (url, currentTrip) => {
+    // await actions.uploadToDB(this.state);
+await updateImageArr(url, currentTrip)
+
 
     this.setState({
       imageUrl: undefined,
       saved: true,
     });
 
-    this.updateArr();
+    this.updateArr(this.props.currentUser);
   };
 
   render() {
@@ -71,6 +73,7 @@ export default class GroupImage extends Component {
     onSaved ? (onSaved = true) : (onSaved = false);
 
     const { imageArr } = this.state;
+    const {currentTrip} = this.props.currentUser
     
     return (
       <div>
@@ -90,7 +93,7 @@ export default class GroupImage extends Component {
             size="small"
             // className={classes.button}
             startIcon={<SaveIcon />}
-            onClick={() => this.handleSubmit(this.state.imageUrl)}
+            onClick={() => this.handleSubmit(this.state.imageUrl, currentTrip)}
           >
             Save
           </Button>
