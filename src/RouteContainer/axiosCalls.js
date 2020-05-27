@@ -21,6 +21,9 @@ const actions = {
   imageList: async () => {
     return await service.get('/imageList')
   },
+  triggerEmail: async (userArr) => {
+    return await service.post('/sendEmail', userArr)
+  },
   uploadToDB: async (img) => {
     return await service.post('/addImg', img)
   },

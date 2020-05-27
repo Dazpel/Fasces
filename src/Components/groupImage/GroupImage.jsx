@@ -45,6 +45,7 @@ export default class GroupImage extends Component {
       .then((response) => {
         // console.log('response is: ', response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
+        console.log(response)
         this.setState({ imageUrl: response.data.secure_url, saved: false });
       })
       .catch((err) => {

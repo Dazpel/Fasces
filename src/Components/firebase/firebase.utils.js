@@ -50,12 +50,15 @@ export const createNewTrip = async (user, tripName, id) => {
   const snapShot = await tripRef.get();
 
   if (!snapShot.exists) {
-    const { email } = user;
+    const { email} = user;
     const createdAt = new Date();
     const tripImages = [];
     const tripReceipts = [];
     const isActive = true;
-    const users = [email];
+    const users = [{
+      'id': user.id,
+      'email': email,
+    }]
 
     try {
       await tripRef.set({
@@ -74,10 +77,55 @@ export const createNewTrip = async (user, tripName, id) => {
   }
 };
 
-//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-const updateTripStatus = async (userID, tripID) => {
-  let user = await firestore.collection('users').doc(userID);
+//FIND FRIENDS EMAIL TO JOIN THE GROUP
+export const findMyFriend = async (email) => {
+  let users = await userList()
+  let tripExist = false
 
+  users.map(el => {
+    if(el.email === email && el.activeTrip === true){
+      return tripExist = el.currentTrip
+    }
+  })
+  
+  return tripExist
+
+};
+
+export const endTrip = async (userID, tripID) => {
+  let user = await firestore.collection('users').doc(userID);
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  let tripData = tripRef.data()
+  let users = tripData.users
+
+  try {
+    user.update({
+      activeTrip: false,
+      currentTrip: '',
+    });
+  } catch (error) {
+    console.log('Error ending trip', error);
+  }
+
+  
+  try {
+    let emails = []
+      users.map( async user => {
+      emails.push(user.email)
+    })
+    return emails
+  } catch (err) {
+    console.log(err);
+  }
+
+  
+  
+}
+
+
+//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
+export const updateTripStatus = async (userID, tripID) => {
+  let user = await firestore.collection('users').doc(userID);
   try {
     user.update({
       activeTrip: true,
@@ -85,7 +133,7 @@ const updateTripStatus = async (userID, tripID) => {
       currentTrip: tripID,
     });
   } catch (error) {
-    console.log('Error adding stock', error);
+    console.log('Error creating trip', error);
   }
 };
 

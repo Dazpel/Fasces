@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import CreateIcon from '@material-ui/icons/Create';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import Button from '@material-ui/core/Button';
 import Topbar from '../navbar/Topbar';
 import NewTrip from './newTrip';
+import JoinTrip from './JoinTrip.jsx';
 
 export default class Trip extends Component {
   render() {
@@ -30,9 +28,9 @@ export default class Trip extends Component {
           className="tripContainer-header"
         >
           <Typography variant="subtitle1" gutterBottom className="">
-            Welcome, {`{user}`}, click <bold>New trip</bold> if you want to
+            Welcome, {`{user}`}, click New trip if you want to
             create a new trip with friends, or if you already have a group,
-            click <bold>Join trip</bold>.
+            click Join trip.
           </Typography>
         </Grid>
         <Grid
@@ -43,17 +41,7 @@ export default class Trip extends Component {
           className="tripContainer-btns"
         >
          <NewTrip  user={this.props.currentUser}/>
-   
-          <Button
-            variant="contained"
-            color="default"
-            size="small"
-            // className={classes.button}
-            startIcon={<AddCircleOutlineIcon />}
-            // onClick={() => this.handleSubmit(this.state.imageUrl)}
-          >
-            Join trip
-          </Button>
+         <JoinTrip user={this.props.currentUser}/>
         </Grid>
       </div>
     );

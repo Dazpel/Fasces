@@ -7,8 +7,8 @@ function rand() {
 }
 
 function getModalStyle() {
-//   const top = 50 + rand();
-//   const left = 50 + rand();
+  //   const top = 50 + rand();
+  //   const left = 50 + rand();
 
   return {
     top: `50%`,
@@ -26,17 +26,18 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  img:{
+  img: {
     width: 300,
-  }
+  },
 }));
 
-export default function GroupImageModal({url}) {
+export default function GroupImageModal({ url }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
+  let downloadUrl = url.replace('image/upload', 'image/upload/fl_attachment');
   const handleOpen = () => {
     setOpen(true);
   };
@@ -47,23 +48,18 @@ export default function GroupImageModal({url}) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-     <div >
-     
-         <img src={url} alt='groupImage' className={classes.img} />
-         
-     </div>
+      <div>
+        <a href={downloadUrl} download>
+          <img src={url} alt="groupImage" className={classes.img} />
+        </a>
+      </div>
     </div>
   );
 
   return (
     <div>
-        
       <img src={url} alt="groupImg" onClick={handleOpen} />
-      <Modal
-        open={open}
-        onClose={handleClose}
-
-      >
+      <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>
     </div>
