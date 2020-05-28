@@ -92,6 +92,22 @@ const updateTripStatus = async (userID) => {
 
 }
 
+export const updateExpenses = async (userID, x) => {
+
+  let user = await firestore.collection('users').doc(userID);
+  let userData = await firestore.collection('users').doc(userID).get()
+  let expense = userData.data().expenses
+  let total = expense + x
+  try {
+    user.update({
+      expenses: total,
+    });
+  } catch (error) {
+    console.log('Error adding stock', error);
+  }
+
+}
+
 export const userList = async () => {
   let userArr = [];
 
@@ -102,6 +118,18 @@ export const userList = async () => {
     console.log(userArr);
     return userArr;
   }
+};
+
+export const tripList = async () => {
+  let userArr = [];
+
+  let users = await firestore.collection('trips').get();
+  // users.docs.map((doc, i) => (userArr[i] = { id: doc.id, ...doc.data() }));
+  return users.docs
+  // if (userArr.length > 0) {
+  //   console.log(userArr);
+  //   return userArr;
+  // }
 };
 
 const sentinel = async (data, upF) => {

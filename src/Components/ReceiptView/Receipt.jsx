@@ -9,7 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import Navbar from '../navbar/Navbar';
 import Topbar from '../navbar/Topbar';
 import ToastMessage from '../Toast/toastMessage';
+import Chat from '../Chat/Chat'
 import './receipt.css';
+import {calculateTotal} from '../Algorithm/receiptAlgorithm'
+
 
 //API KEY FOR OCR SCAN
 let MY_URL_KEY = '31bb9650994211eab7efc1191d38e165';
@@ -38,6 +41,8 @@ export default class Receipt extends Component {
       })
       .then(function (response) {
         //  IF SUCCESSFULL SAVE THE DATA TO FIREBASE
+        //response.data.totalAmount.data is the recipt total (add this.props.currentUser.currentTrip)
+        calculateTotal(response.data.totalAmount.data, 'f58d90a816b9', 'this.props.currentUser')
         updateReceiptArr(id, url, response.data.totalAmount.data);
       })
       .catch(function (error) {
@@ -100,7 +105,7 @@ export default class Receipt extends Component {
     let onSaved = this.state.saved;
     (this.state.imageUrl===undefined) ? onUp = false : onUp=true;
     (onSaved) ? onSaved = true : onSaved=false;
-
+    console.log(this.props.currentUser)
     return (
       <div>
         <div className="table">
