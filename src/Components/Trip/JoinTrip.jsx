@@ -120,6 +120,7 @@ export default function NewTrip({ user }) {
   return (
     <div>
       <Button
+        style ={{backgroundColor:'#2769a7', color: "white"}}
         variant="contained"
         color="default"
         size="small"

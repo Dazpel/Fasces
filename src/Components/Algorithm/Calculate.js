@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Navbar from '../navbar/Navbar'
 import Topbar from '../navbar/Topbar'
+import {balance} from '../firebase/firebase.utils'
+
 class Calculate extends Component {
     render() {
         return (
             <div >
-                <Topbar/>
+                
                 BILLY BRAINS CALCULATIONS (U#))JQFJALKAS2029lol
-                <Navbar/>
+                
             </div>
         );
     }
@@ -15,8 +17,10 @@ class Calculate extends Component {
 
 export default Calculate;
 
-let x = [
-    {
+let x = 
+// await balance()
+[    
+  {
         name: 'Billy',
         balance: -15.75
     },

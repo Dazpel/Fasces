@@ -43,7 +43,6 @@ export default class Home extends Component {
 
     return (
       <div>
-        <Topbar />
         <div>
           {/* <h1 style={{textAlign:'center', color: '#0095ff', textShadow: '2px 2px #b5bbbd'}}>Welcome, {this.props.currentUser.displayName}</h1> */}
           <div style={{ marginLeft: "10px", marginRight: "10px" }}>
@@ -68,7 +67,6 @@ export default class Home extends Component {
           <hr style={{ borderColor: "white", marginBottom: "0" }} />
           {this.printGroups()}
         </div>
-        <Navbar />
       </div>
     );
   }

@@ -38,42 +38,26 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{backgroundColor: 'white'}}>
+      <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title} style={{color:'#0095ff', fontFamily: 'Comic Sans MS, cursive, sans-serif'}}>
-          <Link to='/newhome' style={{textDecoration: 'none', color:'#0095ff'}}>SPLITEX</Link>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            style={{
+              color: "#0095ff",
+              fontFamily: "Comic Sans MS, cursive, sans-serif",
+            }}
+          >
+            <Link to="/" style={{ textDecoration: "none", color: "#0095ff" }}>
+              SPLITEX
+            </Link>
           </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Link to='/Account' style={{color: '#0095ff'}}><AccountCircle /></Link>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <Link to="/Profile" style={{textDecoration: 'none', color:'inherit'}}><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
-                <Link to='/Account' style={{textDecoration: 'none', color:'inherit'}}><MenuItem onClick={handleClose}>My account</MenuItem></Link>
-              </Menu>
-            </div>
-          )}
+
+          <IconButton>
+            <Link to="/Account" style={{ color: "#0095ff" }}>
+              <AccountCircle />
+            </Link>
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

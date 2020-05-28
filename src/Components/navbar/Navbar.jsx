@@ -8,6 +8,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import ReceiptIcon from '@material-ui/icons/Receipt'
+import ChatIcon from '@material-ui/icons/Chat'
 import { Link } from 'react-router-dom'
  
 
@@ -58,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
           >
             <BottomNavigationAction
               style={{ color: "#0095ff" }}
-              label="Home"
+              label="Chat"
               icon={
                 <Link to="/" style={{ color: "#0095ff" }}>
-                  <HomeIcon />
+                  <ChatIcon />
                 </Link>
               }
             />
