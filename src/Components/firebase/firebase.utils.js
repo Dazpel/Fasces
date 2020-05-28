@@ -77,20 +77,6 @@ export const createNewTrip = async (user, tripName, id) => {
 }
 
 
-//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-const updateTripStatus = async (userID) => {
-
-  let user = await firestore.collection('users').doc(userID);
-
-  try {
-    user.update({
-      activeTrip: true,
-    });
-  } catch (error) {
-    console.log('Error adding stock', error);
-  }
-
-}
 
 export const updateExpenses = async (userID, x) => {
 
@@ -135,6 +121,88 @@ export const tripList = async () => {
   //   console.log(userArr);
   //   return userArr;
   // }
+};
+
+export const endTrip = async (userID, tripID) => {
+  let user = await firestore.collection('users').doc(userID);
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  let tripData = tripRef.data()
+  let users = tripData.users
+  try {
+    user.update({
+      activeTrip: false,
+      currentTrip: '',
+    });
+  } catch (error) {
+    console.log('Error ending trip', error);
+  }
+  try {
+    let emails = []
+      users.map( async user => {
+      emails.push(user.email)
+    })
+    return emails
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const updateImageArr = async (url, tripID) => {
+  const docID = tripID;
+  let imageArr = await firestore.collection('trips').doc(docID);
+  const date = new Date();
+  const createdAt = date.toDateString();
+  // let item = {
+  //   url: url,
+  //   id: id,
+  //   createdAt: createdAt,
+  //   amount: imgAmount,
+  // };
+  try {
+    imageArr.update({
+      tripImages: firebase.firestore.FieldValue.arrayUnion(url),
+    });
+  } catch (error) {
+    console.log('Error adding image', error);
+  }
+}
+
+//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
+export const  updateTripStatus = async (userID, tripID) => {
+  let user = await firestore.collection('users').doc(userID);
+  try {
+    user.update({
+      activeTrip: true,
+      trips: firebase.firestore.FieldValue.arrayUnion(tripID),
+      currentTrip: tripID,
+    });
+  } catch (error) {
+    console.log('Error creating trip', error);
+  }
+};
+
+export const retrieveImages = async (user) => {
+  const { currentTrip } = user;
+  let tripImages = [];
+  try {
+    let ref = await firestore.collection('trips').doc(currentTrip).get();
+    let data = await ref.data();
+    tripImages = data.tripImages;
+  } catch (err) {
+    console.log(err);
+  }
+  return tripImages.reverse();
+};
+
+export const findMyFriend = async (email) => {
+  let users = await userList()
+  let tripExist = false
+  users.map(el => {
+    if(el.email === email && el.activeTrip === true){
+      return tripExist = el.currentTrip
+    }
+  })
+  return tripExist
 };
 
 const sentinel = async (data, upF) => {
