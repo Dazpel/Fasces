@@ -22,7 +22,7 @@ import NewHome from './Components/NewHome/NewHome'
 import PastTrips from './Components/Profile/PastTrips'
 import ContactUs from './Components/Profile/ContactUs'
 import SendMail from './Components/sendEmail/SendMail'
-import PastTrip from './Components/PasTrip/PasTrip'
+import PastTrip from './Components/PastTrip/PastTrip'
 import EndTrip from './Components/Trip/EndTrip';
 
 export default class App extends Component {
@@ -93,10 +93,11 @@ export default class App extends Component {
               <Chat {...props} currentUser={this.state.currentUser} />
             )}
           />
+         
           <Route
             exact
             path="/home/receipt"
-            component={(props) => <Receipt {...props} currentUser={this.state.currentUser}/>}
+            component={(props) => (<Receipt {...props} currentUser={this.state.currentUser}/>)}
           />
           <Route
             exact

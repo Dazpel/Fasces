@@ -54,11 +54,17 @@ export const createNewTrip = async (user, tripName, id) => {
 
   if (!snapShot.exists) {
     const { email } = user;
-    const createdAt = new Date();
+    const date = new Date();
+    const createdAt = date.toDateString();
     const tripImages = [];
     const tripReceipts = []
     const isActive = true;
-    const users = [email]
+    const users = [
+      {
+        id: user.id,
+        email: email,
+      },
+    ];
 
     try {
       await tripRef.set({
@@ -70,13 +76,34 @@ export const createNewTrip = async (user, tripName, id) => {
         users
       });
       //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-      await updateTripStatus(user.id)
+      await updateTripStatus(user.id, id, tripName, createdAt);
     } catch (error) {
       console.log('error creating trip', error.message);
     }
   }
 
 }
+
+//FIND FRIENDS EMAIL TO JOIN THE GROUP
+export const findMyFriend = async (email) => {
+  let users = await userList();
+  let tripExist = false;
+
+  users.map((el) => {
+    if (el.email === email && el.activeTrip === true) {
+      return (tripExist = el.currentTrip);
+    }
+  });
+
+  return tripExist;
+};
+
+// export const endTrip = async (userID, tripID) => {
+//   let user = await firestore.collection('users').doc(userID);
+//   let tripRef = await firestore.collection('trips').doc(tripID).get();
+//   let tripData = tripRef.data();
+//   let users = tripData.users;
+// }
 
 
 
@@ -91,8 +118,39 @@ export const updateExpenses = async (userID, x) => {
       expenses: total,
     });
   } catch (error) {
+    console.log('Error ending trip', error);
+  }
+
+  try {
+    let emails = [];
+    user.map(async (user) => {
+      emails.push(user.email);
+    });
+    return emails;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
+export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
+  let user = await firestore.collection('users').doc(userID);
+  let tripInfo = {
+    id: tripID,
+    name: tripName,
+    date: createdAt,
+  };
+  try {
+    user.update({
+      activeTrip: true,
+      trips: firebase.firestore.FieldValue.arrayUnion(tripInfo),
+      currentTrip: tripID,
+    
+  });
+}catch(error){
     console.log('Error adding stock', error);
   }
+
 
 }
 
@@ -107,7 +165,25 @@ export const endTripStatus = async (userID) => {
   } catch (error) {
     console.log('Error adding stock', error);
   }
+}
 
+export const retrieveImages = async (user) => {
+  let currentTrip = '';
+  if (user.queryID) {
+    currentTrip = user.queryID;
+    console.log(currentTrip);
+  } else {
+    currentTrip = user.currentTrip;
+  }
+  let tripImages = [];
+  try {
+    let ref = await firestore.collection('trips').doc(currentTrip).get();
+    let data = await ref.data();
+    tripImages = data.tripImages;
+  } catch (err) {
+    console.log(err);
+  }
+  return tripImages.reverse();
 }
 
 
@@ -127,6 +203,22 @@ console.log('running')
 }
 
 
+export const singleQuery = async (id, tripID) => {
+  let userRef = await firestore.collection('users').doc(id);
+  try {
+    userRef.update({
+      queryID: tripID,
+    });
+  } catch (error) {
+    console.log('Error adding image', error);
+  }
+};
+
+export const fetchTripData = async (tripID) => {
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  return tripRef.data();
+};
+
 export const userList = async () => {
   let userArr = [];
 
@@ -138,6 +230,7 @@ export const userList = async () => {
     return userArr;
   }
 };
+
 
 export const balance = async (tripId) => {
   let trip = await firestore.collection('trips').doc(tripId).get()
@@ -192,6 +285,7 @@ export const updateImageArr = async (url, tripID) => {
   //   amount: imgAmount,
   // };
   try {
+    console.log('running update');
     imageArr.update({
       tripImages: firebase.firestore.FieldValue.arrayUnion(url),
     });
@@ -199,45 +293,6 @@ export const updateImageArr = async (url, tripID) => {
     console.log('Error adding image', error);
   }
 }
-
-//SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
-export const  updateTripStatus = async (userID, tripID) => {
-  let user = await firestore.collection('users').doc(userID);
-  try {
-    user.update({
-      activeTrip: true,
-      trips: firebase.firestore.FieldValue.arrayUnion(tripID),
-      currentTrip: tripID,
-    });
-  } catch (error) {
-    console.log('Error creating trip', error);
-  }
-};
-
-export const retrieveImages = async (user) => {
-  const { currentTrip } = user;
-  let tripImages = [];
-  try {
-    let ref = await firestore.collection('trips').doc(currentTrip).get();
-    let data = await ref.data();
-    tripImages = data.tripImages;
-  } catch (err) {
-    console.log(err);
-  }
-  return tripImages.reverse();
-};
-
-export const findMyFriend = async (email) => {
-  let users = await userList()
-  let tripExist = false
-  users.map(el => {
-    if(el.email === email && el.activeTrip === true){
-      return tripExist = el.currentTrip
-    }
-  })
-  return tripExist
-};
-
 const sentinel = async (data, upF) => {
   const docID = '4mcO13n8lUBeSezFmLD1';
 
@@ -259,19 +314,24 @@ const sentinel = async (data, upF) => {
   );
 };
 
-export const receiptListArr = async (updateFunc) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
+
+export const receiptListArr = async (user, updateFunc) => {
+  let currentTrip = '';
+  if (user.queryID) {
+    currentTrip = user.queryID;
+  } else {
+    currentTrip = user.currentTrip;
+  }
   var receiptArr = [];
-  let arrRef = await firestore.collection('images').doc(docID);
+  let arrRef = await firestore.collection('trips').doc(currentTrip);
   let getDoc = await arrRef
     .get()
     .then((doc) => {
       if (!doc.exists) {
         console.log('No such document!');
       } else {
-        receiptArr = doc.data().receiptImg;
-
-        sentinel(receiptArr, updateFunc);
+        receiptArr = doc.data().tripReceipts;
+        sentinel(receiptArr, updateFunc, currentTrip);
       }
     })
     .catch((err) => {
