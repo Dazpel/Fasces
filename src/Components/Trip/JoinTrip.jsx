@@ -73,7 +73,7 @@ export default function NewTrip({ user }) {
 
   const joinTrip = async (userID, tripID) => {
     await updateTripStatus(userID, tripID )
-    history.push('/newhome')
+    history.push('/')
   };
 
   const body = (
