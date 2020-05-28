@@ -1,6 +1,36 @@
 const router = require('express').Router();
 const uploader = require('../configs/cloudinary-setup');
 const Image = require('../models/Image');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'animipax@gmail.com',
+    pass: 'ironhackproject3'
+  }
+});
+
+
+router.post('/sendEmail', (req, res, next) => {
+  
+  var mailOptions = {
+    from: 'animipax@gmail.com',
+    to: req.body,
+    subject: 'Your trip has ended!',
+    text: `Thank you for using Splitex during your trip, we hope you had an amazing experience.
+    If you want to go back and look at your pictures or receipts, we have saved this under Profile > Past Trips. In there you will see a list of all your past trips as well as your data.
+    `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+});
 
 router.get('/', (req, res, next) => {
   res.status(200).json({ msg: 'Working' });
@@ -29,5 +59,7 @@ router.post('/createUrl', uploader.single('imageUrl'), (req, res, next) => {
   // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
   res.json({ secure_url: req.file.secure_url });
 });
+
+
 
 module.exports = router;

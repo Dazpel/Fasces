@@ -6,6 +6,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
 import ToastMessage from '../Toast/toastMessage';
 import actions from '../../RouteContainer/axiosCalls';
+import { retrieveImages, updateImageArr } from '../firebase/firebase.utils';
+import Progress from '../progress/Progress';
 import './groupImage.css';
 
 export default class GroupImage extends Component {
@@ -15,16 +17,18 @@ export default class GroupImage extends Component {
     saved: false,
   };
 
-  updateArr = async () => {
-    let arr = await actions.imageList();
+  updateArr = async (user) => {
+    let arr = await retrieveImages(user);
+    
 
     this.setState({
-      imageArr: arr.data,
+      imageArr: arr,
     });
   };
 
   componentDidMount() {
-    this.updateArr();
+  this.updateArr(this.props.currentUser, this.state.imageArr)
+
   }
 
   // this method handles just the file upload
@@ -41,6 +45,7 @@ export default class GroupImage extends Component {
       .then((response) => {
         // console.log('response is: ', response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
+        console.log(response)
         this.setState({ imageUrl: response.data.secure_url, saved: false });
       })
       .catch((err) => {
@@ -49,15 +54,17 @@ export default class GroupImage extends Component {
   };
 
   // THIS METHOD ADDS THE IMAGE TO THE LIST
-  handleSubmit = async () => {
-    await actions.uploadToDB(this.state);
+  handleSubmit = async (url, currentTrip) => {
+    // await actions.uploadToDB(this.state);
+await updateImageArr(url, currentTrip)
+
 
     this.setState({
       imageUrl: undefined,
       saved: true,
     });
 
-    this.updateArr();
+    this.updateArr(this.props.currentUser);
   };
 
   render() {
@@ -67,6 +74,8 @@ export default class GroupImage extends Component {
     onSaved ? (onSaved = true) : (onSaved = false);
 
     const { imageArr } = this.state;
+    const {currentTrip} = this.props.currentUser
+    
     return (
       <div>
         <div className="folderContainer">
@@ -85,7 +94,7 @@ export default class GroupImage extends Component {
             size="small"
             // className={classes.button}
             startIcon={<SaveIcon />}
-            onClick={() => this.handleSubmit(this.state.imageUrl)}
+            onClick={() => this.handleSubmit(this.state.imageUrl, currentTrip)}
           >
             Save
           </Button>
@@ -113,6 +122,7 @@ export default class GroupImage extends Component {
         {onUp ? <ToastMessage message={'Success, ready to save!'} /> : ''}
         {onSaved ? <ToastMessage message={'Image saved!'} /> : ''}
       </div>
+     
     );
   }
 }

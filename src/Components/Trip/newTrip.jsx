@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -7,6 +8,16 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { createNewTrip } from "../firebase/firebase.utils";
+=======
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import CreateIcon from '@material-ui/icons/Create';
+import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { createNewTrip } from '../firebase/firebase.utils';
+>>>>>>> eb10af43643b6ac30dd82e59774c0a56ffc7d244
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;

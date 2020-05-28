@@ -58,13 +58,13 @@ export default class Chat extends Component {
 
       let participants = setParticipants(this.state.groupUsers, currentUser.id);
 
-      // var conversation = window.talkSession.getOrCreateConversation(
-      //   `splitexproject3`
-      // );
-
       var conversation = window.talkSession.getOrCreateConversation(
         this.props.chatID
       );
+
+      // var conversation = window.talkSession.getOrCreateConversation(
+      //   this.props.match.params.id
+      // );
 
       conversation.setParticipant(me);
 

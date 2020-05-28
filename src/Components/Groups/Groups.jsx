@@ -20,6 +20,8 @@ class Groups extends Component {
     {
         console.log(this.props.currentUser)
         let  currentUser = this.props.currentUser
+        console.log(currentUser)
+        console.log(groupName)
         updateTracking(currentUser, groupName)      
     }
 
@@ -48,6 +50,7 @@ class Groups extends Component {
 
     displayGroups = () => {
         return this.state.userGroups.map(element => {
+                let x = element
                 return(
                 <div>
                     <button onClick={() => this.joinGroup(element)}>{element}</button>
