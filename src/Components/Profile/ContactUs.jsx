@@ -4,11 +4,19 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 import './PastTrips.css'
+import '../Trip/trip.css'
 
 
 class ContactUs extends Component {
     state = {
         creators: [
+            {
+                name: 'Alexander Victoria',
+                img: '/Alex.jpeg',
+                description: 'Software Developer - JavaScript, React.js, Express.js, Node.js​, ​MongoDB',
+                email: 'alexxdav97@gmail.com',
+                linkedIn: 'https://www.linkedin.com/in/dazpel/'
+            },
             {
                 name: 'Billy Zedan',
                 img: '/Billy.jpeg',
@@ -22,13 +30,6 @@ class ContactUs extends Component {
                 description: 'Software Developer - JavaScript, React.js, Express.js, Node.js​, ​MongoDB',
                 email: 'hugo.suarez92@yahoo.com',
                 linkedIn: 'https://www.linkedin.com/in/hugosuarezjr/'
-            },
-            {
-                name: 'Alexander Victoria',
-                img: '/Alex.jpeg',
-                description: 'Software Developer - JavaScript, React.js, Express.js, Node.js​, ​MongoDB',
-                email: 'alexxdav97@gmail.com',
-                linkedIn: 'https://www.linkedin.com/in/dazpel/'
             }
         ]
     }
@@ -37,8 +38,8 @@ class ContactUs extends Component {
           return (
             
             <>
-            <br/>
-              <Paper className='paper' style={{backgroundColor: '#white', maxWidth: 300}}>
+           
+              <Paper className='paper' style={{backgroundColor: '#white', maxWidth: 300, borderRadius: '10px'}}>
                 <Grid container spacing={2}>
                   <Grid item>
                       <Link to='/TripImage'><img style={{width: '100vw', borderRadius: '50%'}} className='img' alt="complex" src={creator.img} /></Link>
@@ -66,6 +67,7 @@ class ContactUs extends Component {
                   </Grid>
                 </Grid>
               </Paper>
+              <br/>
             </>
             
           )
@@ -73,14 +75,14 @@ class ContactUs extends Component {
       }
     render() {
         return (
-            <>
-            <div style={{textAlign: 'center', textDecoration: 'underline'}}>
-                <h1>The Creators</h1>
+            <div className='gradientContact'>
+            <div style={{textAlign: 'center'}}>
+                <h1 style={{marginTop: 0, color: 'white', paddingTop: '10px'}}>The Creators</h1>
             </div>
-            <div className='base' style={{textAlign: 'center', overflow: 'scroll', height: '74vh'}} >
+            <div className='base' style={{textAlign: 'center', overflow: 'scroll', height: '77vh'}} >
           {this.showContacts()}
           </div>
-            </>
+            </div>
         );
     }
 }
