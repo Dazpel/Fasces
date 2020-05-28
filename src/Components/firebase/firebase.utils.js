@@ -13,6 +13,8 @@ const config = {
   measurementId: 'G-NB8J25CEJN',
 };
 
+
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -91,6 +93,37 @@ const updateTripStatus = async (userID) => {
   }
 
 }
+
+export const endTripStatus = async (userID) => {
+
+  let user = await firestore.collection('users').doc(userID);
+
+  try {
+    user.update({
+      activeTrip: false,
+    });
+  } catch (error) {
+    console.log('Error adding stock', error);
+  }
+
+}
+
+
+// UPDATE QUOTE FOR PROFILE
+export const updateQuote = async (userID, quote) => {
+console.log('running')
+  let user = await firestore.collection('users').doc(userID);
+
+  try {
+    user.update({
+      quote: quote,
+    });
+  } catch (error) {
+    console.log('Error adding quote', error);
+  }
+
+}
+
 
 export const userList = async () => {
   let userArr = [];

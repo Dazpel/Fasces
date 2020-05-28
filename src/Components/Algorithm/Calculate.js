@@ -5,9 +5,9 @@ class Calculate extends Component {
     render() {
         return (
             <div >
-                <Topbar/>
+                
                 BILLY BRAINS CALCULATIONS (U#))JQFJALKAS2029lol
-                <Navbar/>
+                
             </div>
         );
     }

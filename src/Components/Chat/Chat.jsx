@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Talk from 'talkjs';
 import { userList } from '../firebase/firebase.utils';
 import './chat.css';
-import BackButton from './BackButton'
+import Topbar from '../navbar/Topbar'
+import Progress from '../progress/Progress'
+
+
+
 export default class Chat extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +63,7 @@ export default class Chat extends Component {
       // );
 
       var conversation = window.talkSession.getOrCreateConversation(
-        this.props.match.params.id
+        this.props.chatID
       );
 
       conversation.setParticipant(me);
@@ -78,15 +82,19 @@ export default class Chat extends Component {
     });
   }
 
+
+
   render() {
     console.log(this.state.groupUsers);
     return (
       <div className="full-view">
-      <div className="top">
-      <BackButton/>
-      </div>
-    <div className="chatbox-container" ref={this.talkjsContainer}>
-    </div>
+      {/* <div className="top">
+
+      </div> */}
+      
+      {this.state.groupUsers ? (<div className="chatbox-container" ref={this.talkjsContainer}/>) : (<Progress/>)}
+    
+    
     </div>
     )}
 }

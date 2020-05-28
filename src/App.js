@@ -19,10 +19,12 @@ import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
 import Trip from './Components/Trip/trip'
 import NewHome from './Components/NewHome/NewHome'
+import PastTrips from './Components/Profile/PastTrips'
+import ContactUs from './Components/Profile/ContactUs'
 
 export default class App extends Component {
   state = {
-    currentUser: '',
+    currentUser: {activeTrip: false},
     isData: false,
     onTrip: false,
   };
@@ -46,7 +48,7 @@ export default class App extends Component {
               ...snapShot.data(),
             },
             isData: true,
-            onTrip: status.isActive
+            onTrip: status.activeTrip
           });
         });
       }
@@ -60,23 +62,28 @@ export default class App extends Component {
   //On log out clean session data and set it to null
   componentWillUnmount() {
     this.unsubscribeFromAuth();
+    console.log('out')
+    this.setState({
+      currentUser: { activeTrip: false }
+    })
   }
   /* END OF TRACKING USER STATUS*/
   /* START OF TRACK IF USER LOGGED IN OR NOT, PASS DOWN TO ALL COMPONENTS */
 
   render() {
     const { currentUser, isData, onTrip } = this.state;
-    console.log(onTrip)
+    console.log(currentUser)
     return (
       <div>
+      {currentUser ? <Topbar/> : ('')}
         <Switch>
-        <Route
+        {/* <Route
             exact
             path="/newhome"
             component={(props) => (
               <NewHome {...props} currentUser={currentUser}/>
             )}
-          />
+          /> */}
           <Route
             exact
             path="/chat/:id"
@@ -146,7 +153,22 @@ export default class App extends Component {
               <CreateGroup {...props} currentUser={this.state.currentUser} />
             )}
           />
+          <Route
+            exact
+            path="/PastTrips"
+            component={(props) => (
+              <PastTrips {...props} currentUser={this.state.currentUser} />
+            )}
+          />
+          <Route
+            exact
+            path="/ContactUs"
+            component={(props) => (
+              <ContactUs {...props} currentUser={this.state.currentUser} />
+            )}
+          />
         </Switch>
+        {currentUser ? (currentUser.activeTrip ? <Navbar/> : ('')): ('')}
       </div>
     );
   }

@@ -6,6 +6,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 import Topbar from '../navbar/Topbar';
 import NewTrip from './newTrip';
+import './trip.css'
 
 export default class Trip extends Component {
   render() {
@@ -20,8 +21,8 @@ export default class Trip extends Component {
     };
 
     return (
-      <div className="tripContainer">
-        <Topbar />
+      <div className="gradientHome">
+      <div className="tripContainer" >
         <Grid
           container
           direction="column"
@@ -29,10 +30,10 @@ export default class Trip extends Component {
           alignItems="center"
           className="tripContainer-header"
         >
-          <Typography variant="subtitle1" gutterBottom className="">
-            Welcome, {`{user}`}, click <bold>New trip</bold> if you want to
+          <Typography variant="subtitle1" gutterBottom className="" style={{color: 'white', textAlign: 'center'}}>
+            <h2>Welcome, {this.props.currentUser.displayName}, click New trip if you want to
             create a new trip with friends, or if you already have a group,
-            click <bold>Join trip</bold>.
+            click Join trip.</h2>
           </Typography>
         </Grid>
         <Grid
@@ -45,6 +46,7 @@ export default class Trip extends Component {
          <NewTrip  user={this.props.currentUser}/>
    
           <Button
+            style ={{backgroundColor:'#2769a7', color: "white"}}
             variant="contained"
             color="default"
             size="small"
@@ -55,6 +57,7 @@ export default class Trip extends Component {
             Join trip
           </Button>
         </Grid>
+        </div>
       </div>
     );
   }
