@@ -19,6 +19,9 @@ import AccountView from './Components/Profile/AccountView';
 import GroupImage from './Components/groupImage/GroupImage';
 import Trip from './Components/Trip/trip'
 import NewHome from './Components/NewHome/NewHome'
+import SendMail from './Components/sendEmail/SendMail'
+import PastTrip from './Components/PasTrip/PasTrip'
+import EndTrip from './Components/Trip/EndTrip';
 
 export default class App extends Component {
   state = {
@@ -38,7 +41,7 @@ export default class App extends Component {
         //If logged in, retrieve the data from user and set it to State
         const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot((snapShot) => {
+       await userRef.onSnapshot((snapShot) => {
           let status = snapShot.data()
           this.setState({
             currentUser: {
@@ -46,7 +49,7 @@ export default class App extends Component {
               ...snapShot.data(),
             },
             isData: true,
-            onTrip: status.isActive
+            onTrip: status.activeTrip
           });
         });
       }
@@ -66,7 +69,6 @@ export default class App extends Component {
 
   render() {
     const { currentUser, isData, onTrip } = this.state;
-    console.log(onTrip)
     return (
       <div>
         <Switch>
@@ -87,12 +89,27 @@ export default class App extends Component {
           <Route
             exact
             path="/home/receipt"
-            component={(props) => <Receipt {...props} />}
+            component={(props) => <Receipt {...props} currentUser={this.state.currentUser}/>}
+          />
+          <Route
+            exact
+            path="/home/pastTrip"
+            component={(props) => <PastTrip {...props} currentUser={this.state.currentUser}/>}
+          />
+          <Route
+            exact
+            path="/home/endTrip"
+            component={(props) => <EndTrip {...props} currentUser={this.state.currentUser}/>}
+          />
+          <Route
+            exact
+            path="/home/mail"
+            component={(props) => <SendMail {...props} currentUser={this.state.currentUser}/>}
           />
           <Route
             exact
             path="/home/image"
-            component={(props) => <GroupImage {...props} />}
+            component={(props) => <GroupImage {...props} currentUser={this.state.currentUser}/>}
           />
           <Route
             path="/Calculate"

@@ -3,6 +3,7 @@ import Progress from '../progress/Progress';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import GroupImageModal from './groupImageModal'
 
 // import GridListTileBar from '@material-ui/core/GridListTileBar';
 // import ListSubheader from '@material-ui/core/ListSubheader';
@@ -38,15 +39,15 @@ export default function GroupImageFolder({ imageArr }) {
   //  const { imageArr } = this.props;
 
   const displayImages = (list) => {
-    console.log(list);
+   
     return (
       <div className={classes.root}>
         <div className={classes.title}>My Trip</div>
 
         <GridList cellHeight={180} className={classes.gridList}>
-          {list.map((tile) => (
-            <GridListTile key={tile._id}>
-              <img src={tile.imageUrl} alt={tile._id} />
+          {list.map((tile, i) => (
+            <GridListTile key={i}>
+              <GroupImageModal url={tile} />
               {/* <GridListTileBar
                   title={tile.title}
                   subtitle={<span>by: {tile.author}</span>}
