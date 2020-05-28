@@ -73,7 +73,7 @@ export default function NewTrip({ user }) {
 
     let id = await generateID();
     await createNewTrip(user, name, id);
-    history.push("/newhome");
+    history.push("/");
   };
 
   const body = (

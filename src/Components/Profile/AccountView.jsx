@@ -14,7 +14,7 @@ class AccountView extends Component {
     const alert = () => {
       if (window.confirm("Do you really want to leave?")) { 
         endTripStatus(this.props.currentUser.id)
-        window.open("/", "Thanks for Visiting!");
+        this.props.history.push('/')
       }
     }
 

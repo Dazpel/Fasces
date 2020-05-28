@@ -13,8 +13,6 @@ const config = {
   measurementId: 'G-NB8J25CEJN',
 };
 
-
-
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -45,7 +43,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-
 //CREATE A NEW TRIP INSTANCE WITH ALL COMPOENTS EMPY
 export const createNewTrip = async (user, tripName, id) => {
   const tripRef = firestore.doc(`trips/${id}`);
@@ -57,7 +54,7 @@ export const createNewTrip = async (user, tripName, id) => {
     const date = new Date();
     const createdAt = date.toDateString();
     const tripImages = [];
-    const tripReceipts = []
+    const tripReceipts = [];
     const isActive = true;
     const users = [
       {
@@ -73,7 +70,7 @@ export const createNewTrip = async (user, tripName, id) => {
         tripName,
         tripImages,
         tripReceipts,
-        users
+        users,
       });
       //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
       await updateTripStatus(user.id, id, tripName, createdAt);
@@ -81,8 +78,7 @@ export const createNewTrip = async (user, tripName, id) => {
       console.log('error creating trip', error.message);
     }
   }
-
-}
+};
 
 //FIND FRIENDS EMAIL TO JOIN THE GROUP
 export const findMyFriend = async (email) => {
@@ -105,14 +101,11 @@ export const findMyFriend = async (email) => {
 //   let users = tripData.users;
 // }
 
-
-
 export const updateExpenses = async (userID, x) => {
-
   let user = await firestore.collection('users').doc(userID);
-  let userData = await firestore.collection('users').doc(userID).get()
-  let expense = userData.data().expenses
-  let total = expense + x
+  let userData = await firestore.collection('users').doc(userID).get();
+  let expense = userData.data().expenses;
+  let total = expense + x;
   try {
     user.update({
       expenses: total,
@@ -145,19 +138,16 @@ export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
       activeTrip: true,
       trips: firebase.firestore.FieldValue.arrayUnion(tripInfo),
       currentTrip: tripID,
-    
-  });
-}catch(error){
+    });
+  } catch (error) {
     console.log('Error adding stock', error);
   }
-
-
-}
+};
 
 export const endTripStatus = async (userID) => {
 
   let user = await firestore.collection('users').doc(userID);
-
+  console.log(user)
   try {
     user.update({
       activeTrip: false,
@@ -165,7 +155,7 @@ export const endTripStatus = async (userID) => {
   } catch (error) {
     console.log('Error adding stock', error);
   }
-}
+};
 
 export const retrieveImages = async (user) => {
   let currentTrip = '';
@@ -184,12 +174,11 @@ export const retrieveImages = async (user) => {
     console.log(err);
   }
   return tripImages.reverse();
-}
-
+};
 
 // UPDATE QUOTE FOR PROFILE
 export const updateQuote = async (userID, quote) => {
-console.log('running')
+  console.log('running');
   let user = await firestore.collection('users').doc(userID);
 
   try {
@@ -199,9 +188,7 @@ console.log('running')
   } catch (error) {
     console.log('Error adding quote', error);
   }
-
-}
-
+};
 
 export const singleQuery = async (id, tripID) => {
   let userRef = await firestore.collection('users').doc(id);
@@ -231,18 +218,17 @@ export const userList = async () => {
   }
 };
 
-
 export const balance = async (tripId) => {
-  let trip = await firestore.collection('trips').doc(tripId).get()
-  return trip.balance
-}
+  let trip = await firestore.collection('trips').doc(tripId).get();
+  return trip.balance;
+};
 
 export const tripList = async () => {
   let userArr = [];
 
   let users = await firestore.collection('trips').get();
   // users.docs.map((doc, i) => (userArr[i] = { id: doc.id, ...doc.data() }));
-  return users.docs
+  return users.docs;
   // if (userArr.length > 0) {
   //   console.log(userArr);
   //   return userArr;
@@ -252,8 +238,8 @@ export const tripList = async () => {
 export const endTrip = async (userID, tripID) => {
   let user = await firestore.collection('users').doc(userID);
   let tripRef = await firestore.collection('trips').doc(tripID).get();
-  let tripData = tripRef.data()
-  let users = tripData.users
+  let tripData = tripRef.data();
+  let users = tripData.users;
   try {
     user.update({
       activeTrip: false,
@@ -263,15 +249,15 @@ export const endTrip = async (userID, tripID) => {
     console.log('Error ending trip', error);
   }
   try {
-    let emails = []
-      users.map( async user => {
-      emails.push(user.email)
-    })
-    return emails
+    let emails = [];
+    users.map(async (user) => {
+      emails.push(user.email);
+    });
+    return emails;
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 export const updateImageArr = async (url, tripID) => {
   const docID = tripID;
@@ -292,7 +278,7 @@ export const updateImageArr = async (url, tripID) => {
   } catch (error) {
     console.log('Error adding image', error);
   }
-}
+};
 const sentinel = async (data, upF) => {
   const docID = '4mcO13n8lUBeSezFmLD1';
 
@@ -313,7 +299,6 @@ const sentinel = async (data, upF) => {
     }
   );
 };
-
 
 export const receiptListArr = async (user, updateFunc) => {
   let currentTrip = '';
@@ -340,8 +325,6 @@ export const receiptListArr = async (user, updateFunc) => {
 
   return receiptArr;
 };
-
-
 
 export const updateReceiptArr = async (id, imgURL, imgAmount) => {
   const docID = '4mcO13n8lUBeSezFmLD1';
