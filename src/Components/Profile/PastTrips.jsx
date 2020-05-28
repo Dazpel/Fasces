@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 import './PastTrips.css'
 import React, { Component } from 'react';
-import Dollar from '@material-ui/icons/AttachMoney'
+
 
 class PastTrips extends Component {
 
