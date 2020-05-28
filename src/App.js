@@ -20,7 +20,7 @@ import GroupImage from './Components/groupImage/GroupImage';
 import Trip from './Components/Trip/trip'
 import NewHome from './Components/NewHome/NewHome'
 import SendMail from './Components/sendEmail/SendMail'
-import PastTrip from './Components/PasTrip/PasTrip'
+import PastTrip from './Components/PastTrip/PastTrip'
 import EndTrip from './Components/Trip/EndTrip';
 
 export default class App extends Component {
@@ -86,10 +86,11 @@ export default class App extends Component {
               <Chat {...props} currentUser={this.state.currentUser} />
             )}
           />
+         
           <Route
             exact
             path="/home/receipt"
-            component={(props) => <Receipt {...props} currentUser={this.state.currentUser}/>}
+            component={(props) => (<Receipt {...props} currentUser={this.state.currentUser}/>)}
           />
           <Route
             exact

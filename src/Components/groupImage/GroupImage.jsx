@@ -19,7 +19,6 @@ export default class GroupImage extends Component {
 
   updateArr = async (user) => {
     let arr = await retrieveImages(user);
-    
 
     this.setState({
       imageArr: arr,
@@ -27,8 +26,7 @@ export default class GroupImage extends Component {
   };
 
   componentDidMount() {
-  this.updateArr(this.props.currentUser, this.state.imageArr)
-
+    this.updateArr(this.props.currentUser, this.state.imageArr);
   }
 
   // this method handles just the file upload
@@ -45,7 +43,7 @@ export default class GroupImage extends Component {
       .then((response) => {
         // console.log('response is: ', response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        console.log(response)
+        console.log(response);
         this.setState({ imageUrl: response.data.secure_url, saved: false });
       })
       .catch((err) => {
@@ -56,8 +54,7 @@ export default class GroupImage extends Component {
   // THIS METHOD ADDS THE IMAGE TO THE LIST
   handleSubmit = async (url, currentTrip) => {
     // await actions.uploadToDB(this.state);
-await updateImageArr(url, currentTrip)
-
+    await updateImageArr(url, currentTrip);
 
     this.setState({
       imageUrl: undefined,
@@ -74,8 +71,13 @@ await updateImageArr(url, currentTrip)
     onSaved ? (onSaved = true) : (onSaved = false);
 
     const { imageArr } = this.state;
-    const {currentTrip} = this.props.currentUser
-    
+    let currentTrip = '';
+    if (this.props.currentUser.queryID) {
+      currentTrip = this.props.currentUser.queryID;
+    } else {
+      currentTrip = this.props.currentUser.currentTrip;
+    }
+
     return (
       <div>
         <div className="folderContainer">
@@ -122,7 +124,6 @@ await updateImageArr(url, currentTrip)
         {onUp ? <ToastMessage message={'Success, ready to save!'} /> : ''}
         {onSaved ? <ToastMessage message={'Image saved!'} /> : ''}
       </div>
-     
     );
   }
 }

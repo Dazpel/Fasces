@@ -55,6 +55,7 @@ export default class Receipt extends Component {
 
   //TRIGGER THE OCR SCAN FUNCTION
   uploadAndScan = async (url, currentTrip) => {
+    console.log(currentTrip)
     await this.getReceiptData(url, currentTrip);
   };
 
@@ -97,7 +98,12 @@ export default class Receipt extends Component {
   };
 
   render() {
-    const {currentTrip} = this.props.currentUser
+    let currentTrip = ''
+    if (this.props.currentUser.queryID){
+      currentTrip = this.props.currentUser.queryID
+    }else{
+      currentTrip = this.props.currentUser.currentTrip
+    }
     let onUp = false;
     let onSaved = this.state.saved;
     (this.state.imageUrl===undefined) ? onUp = false : onUp=true;
