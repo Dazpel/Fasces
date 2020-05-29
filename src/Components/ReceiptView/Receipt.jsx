@@ -25,7 +25,7 @@ export default class Receipt extends Component {
 
   //IN THIS FUNCTION WE MAKE A CALL TO THE ACR SCAN API AND WE PASS THE DATA WE RECIEVE TO
   //FIREBASE FOR STORAGE
-  getReceiptData = async (urlImage, currentTrip) => {
+  getReceiptData = async (urlImage, currentTrip, user) => {
     const { url, id } = urlImage
     let file = {
       url: url,
@@ -43,8 +43,8 @@ export default class Receipt extends Component {
       .then(function (response) {
         //  IF SUCCESSFULL SAVE THE DATA TO FIREBASE
         //response.data.totalAmount.data is the recipt total (add this.props.currentUser.currentTrip)
-        calculateTotal(response.data.totalAmount.data, 'f58d90a816b9', 'this.props.currentUser')
-        updateReceiptArr(id, url, response.data.totalAmount.data, currentTrip);
+        calculateTotal(response.data.totalAmount.data, currentTrip, user)
+        updateReceiptArr(id, url, response.data.totalAmount.data, currentTrip)
       })
       .catch(function (error) {
         console.log(error);
@@ -59,9 +59,9 @@ export default class Receipt extends Component {
   };
 
   //TRIGGER THE OCR SCAN FUNCTION
-  uploadAndScan = async (url, currentTrip) => {
+  uploadAndScan = async (url, currentTrip, user) => {
     console.log(currentTrip)
-    await this.getReceiptData(url, currentTrip);
+    await this.getReceiptData(url, currentTrip, user);
   };
 
   //UPLOAD FILE TO CLOUDINARY AND GET THE IMG URL AND ID
@@ -127,7 +127,7 @@ export default class Receipt extends Component {
             size="small"
             // className={classes.button}
             startIcon={<SaveIcon />}
-            onClick={() => this.uploadAndScan(this.state.imageUrl, currentTrip)}
+            onClick={() => this.uploadAndScan(this.state.imageUrl, currentTrip, this.props.currentUser)}
           >
             Save
           </Button>

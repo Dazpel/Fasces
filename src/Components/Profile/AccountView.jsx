@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
-import { endTripStatus } from '../firebase/firebase.utils'
+import { endTripStatus, tripBalance } from '../firebase/firebase.utils'
 
 class AccountView extends Component {
 
@@ -12,7 +12,8 @@ class AccountView extends Component {
 
     //Function for clicking OK on End Trip
     const alert = () => {
-      if (window.confirm("Do you really want to leave?")) { 
+      if (window.confirm("Do you really want to leave?")) {
+        tripBalance(this.props.currentUser.currentTrip)
         endTripStatus(this.props.currentUser.id)
         this.props.history.push('/')
       }
