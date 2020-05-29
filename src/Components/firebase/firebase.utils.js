@@ -196,18 +196,72 @@ export const getTripBalance = async (tripID) => {
   return tripData.balance;
 };
 
-export const endTripStatus = async (userID) => {
-  let user = await firestore.collection('users').doc(userID);
-  console.log(user);
-  try {
-    user.update({
-      activeTrip: false,
-      currentTrip: '',
-    });
-  } catch (error) {
-    console.log('Error adding stock', error);
-  }
+// export const endTripStatus = async (userID) => {
+//   let user = await firestore.collection('users').doc(userID);
+//   console.log(user);
+//   try {
+//     user.update({
+//       activeTrip: false,
+//       currentTrip: '',
+//     });
+//   } catch (error) {
+//     console.log('Error adding stock', error);
+//   }
+// };
+
+export const endTripStatus = async (tripID) => {
+  let tripData = await firestore.collection('trips').doc(tripID).get();
+  let users = tripData.data().users
+  users.map(async (ele) => {
+    let user = await firestore.collection('users').doc(ele.id)
+    try {
+      user.update({
+        activeTrip: false,
+        currentTrip: ''
+      })
+    }catch (error) {
+      console.log('Error adding stock', error);
+    }
+  })
 };
+
+export const cosimo = async (userName, tripId) => {
+  let x = await balance(tripId)
+  let output = ''
+  for(let i = 0; i < x.length; i++)
+  {
+      if( x[i].balance < 0 )
+      {
+          for(let j = 0; j < x.length; j++)
+          {
+              if(x[j].balance > 0)
+              {
+                  if(x[j].balance >= (x[i].balance*-1))
+                  {
+                      if(x[i].name === userName)
+                        {output += "You should pay " + x[j].name + " $" + (x[i].balance*-1)+ '\n'}
+                      x[j].balance += x[i].balance
+                      x[i].balance = 0;
+                      break;
+                  }
+                  else 
+                  {
+                      if(x[i].name === userName)
+                        {output += "You should pay " + x[j].name + " $" + (x[j].balance)+ '\n'}
+                      x[i].balance += x[j].balance
+                      x[j].balance = 0
+                  }
+              }
+          }
+      }
+      else
+      {
+          if(x[i].name === userName)
+            output += 'You have paid!'
+      }
+  }
+  return output
+}
 
 export const retrieveImages = async (user, query) => {
   let currentTrip = '';

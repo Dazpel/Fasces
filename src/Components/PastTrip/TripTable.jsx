@@ -60,7 +60,9 @@ function goToTrip(props, uID, tripID, option) {
     case 2:
       props.history.push('/pastTrip/image');
       break;
-
+    case 3:
+      props.history.push('/pastTrip/expenses')
+      break;
     default:
       break;
   }
