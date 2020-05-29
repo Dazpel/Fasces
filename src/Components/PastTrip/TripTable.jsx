@@ -41,17 +41,14 @@ const updateUser = async (uID, tripID) => {
 };
 
 const getBalance = async (tripID, name, setBalance) => {
-
-  let x = await getTripBalance(tripID)
-  let balance = ''
-  x.map(el => {
+  let x = await getTripBalance(tripID);
+  let balance = '';
+  x.map((el) => {
     if (el.name === name) {
-      setBalance(el.balance)
+      setBalance(el.balance);
     }
-  })
-
-
-}
+  });
+};
 
 function goToTrip(props, uID, tripID, option) {
   updateUser(uID, tripID);
@@ -71,15 +68,19 @@ function goToTrip(props, uID, tripID, option) {
 
 export default function SimpleList({ arr, userID, props }) {
   const classes = useStyles();
-  const [balance, setBalance] = React.useState(0)
+  const [balance, setBalance] = React.useState(0);
 
-  let image = 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg';
+  let image = [
+    'https://www.exoticca.travel/blog/wp-content/uploads/2018/09/bigstock-Happy-Man-Traveler-Jumping-Wit-239063806-800x360.jpg',
+    'https://thetravelexpert.ie/wp-content/uploads/2019/05/shutterstock_358226087-compressor.jpg',
+    'https://qtxasset.com/styles/breakpoint_l_640px_w/s3/2017-06/roadtripgetty.jpg?sREdvaCPJPe1s1R6oIpEh97tfhL9kSfO&itok=lC0DkMY5',
+  ];
 
   return (
     <>
       <div style={{ overflow: 'scroll', height: '85vh' }}>
         <div className="base" style={{ textAlign: 'center' }}>
-          {arr.map(  (el, i) => {
+          {arr.map((el, i) => {
             // getBalance(el.id, props.currentUser.displayName, setBalance)
             return (
               <Paper
@@ -92,12 +93,19 @@ export default function SimpleList({ arr, userID, props }) {
                       style={{ width: '100vw' }}
                       className="img"
                       alt="complex"
-                      src={image}
+                      src={image[i]}
                     />
                   </Grid>
-                  <Grid item xs={12} sm container justify="center" alignItems="center">
+                  <Grid
+                    item
+                    xs={12}
+                    sm
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
                     <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs >
+                      <Grid item xs>
                         <Typography gutterBottom variant="subtitle1">
                           {el.name}
                         </Typography>
@@ -117,7 +125,9 @@ export default function SimpleList({ arr, userID, props }) {
                                 marginBottom: '10px',
                               }}
                             >
-                              {(balance>0) ? `What you owe: 0` : `What you owe: ${balance}`}
+                              {balance > 0
+                                ? `What you owe: 0`
+                                : `What you owe: ${balance}`}
                             </div>
                             <div
                               style={{
@@ -135,7 +145,9 @@ export default function SimpleList({ arr, userID, props }) {
                             size="small"
                             color="primary"
                             className={classes.margin}
-                            onClick={ () => {goToTrip(props, userID, el.id, 1)}}
+                            onClick={() => {
+                              goToTrip(props, userID, el.id, 1);
+                            }}
                           >
                             receipts
                           </Button>
@@ -144,7 +156,9 @@ export default function SimpleList({ arr, userID, props }) {
                             size="small"
                             color="primary"
                             className={classes.margin}
-                            onClick={ () => {goToTrip(props, userID, el.id, 2)}}
+                            onClick={() => {
+                              goToTrip(props, userID, el.id, 2);
+                            }}
                           >
                             images
                           </Button>
@@ -153,7 +167,9 @@ export default function SimpleList({ arr, userID, props }) {
                             size="small"
                             color="primary"
                             className={classes.margin}
-                            onClick={ () => {goToTrip(props, userID, el.id, 3)}}
+                            onClick={() => {
+                              goToTrip(props, userID, el.id, 3);
+                            }}
                           >
                             expenses
                           </Button>
