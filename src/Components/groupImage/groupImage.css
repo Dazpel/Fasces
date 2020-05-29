@@ -23,3 +23,8 @@
 .receipTable-expenses{
     margin-top:10px;
 }
+
+.imgFit > img{
+    width: 185px;
+    height: 185px;
+}
