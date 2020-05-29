@@ -140,6 +140,44 @@ export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
   }
 };
 
+export const tripBalance = async (tripId) => {
+  let x = []
+  let trips = await tripList()
+  let tripIndex = 0
+  trips.map((ele, i) => {
+      if (ele.id === tripId){tripIndex =  i}
+  })
+  let users = trips[tripIndex].data().users
+  let trip = await firestore.collection('trips').doc(tripId);
+  //let numOfUsers = users.length
+  users.map(async (userId) => {
+    
+      let user = await firestore.collection('users').doc(userId.id);
+      let userData = await firestore.collection('users').doc(userId.id).get()
+      let expense = userData.data().expenses
+      x = { name:userData.data().displayName, balance:expense}
+      console.log(x)
+      try {
+          user.update({
+            expenses: 0,
+          });
+          trip.update({
+            balance: firebase.firestore.FieldValue.arrayUnion(x)
+          });
+        } catch (error) {
+          console.log('Error adding stock', error);
+        }
+      return 0
+  })
+  
+  console.log(x)
+  try {
+      
+  } catch (error) {
+      console.log('Error adding stock', error);
+  }
+}
+
 export const getTripData = async (tripID) => {
   let tripRef = await firestore.collection('trips').doc(tripID).get();
   let tripData = tripRef.data();
@@ -234,7 +272,7 @@ export const userList = async () => {
 
 export const balance = async (tripId) => {
   let trip = await firestore.collection('trips').doc(tripId).get();
-  return trip.balance;
+  return trip.data().balance;
 };
 
 export const tripList = async () => {
