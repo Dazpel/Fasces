@@ -14,7 +14,7 @@ class AccountView extends Component {
     const alert = () => {
       if (window.confirm("Do you really want to leave?")) {
         tripBalance(this.props.currentUser.currentTrip)
-        endTripStatus(this.props.currentUser.id)
+        endTripStatus(this.props.currentUser.currentTrip)
         this.props.history.push('/')
       }
     }

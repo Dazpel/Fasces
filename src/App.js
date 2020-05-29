@@ -24,6 +24,7 @@ import ContactUs from './Components/Profile/ContactUs'
 import SendMail from './Components/sendEmail/SendMail'
 import PastTrip from './Components/PastTrip/PastTrip'
 import EndTrip from './Components/Trip/EndTrip';
+import Expenses from './Components/Expenses/Expenses'
 
 export default class App extends Component {
   state = {
@@ -98,6 +99,11 @@ export default class App extends Component {
             exact
             path="/home/receipt"
             component={(props) => (<Receipt {...props} currentUser={this.state.currentUser}/>)}
+          />
+          <Route
+            exact
+            path="/pastTrip/expenses"
+            component={(props) => (<Expenses {...props} currentUser={this.state.currentUser}/>)}
           />
           <Route
             exact
