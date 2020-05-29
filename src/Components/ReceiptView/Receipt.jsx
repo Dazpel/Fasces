@@ -101,7 +101,7 @@ export default class Receipt extends Component {
 
   render() {
     let currentTrip = ''
-    if (this.props.currentUser.queryID){
+    if (this.props.query){
       currentTrip = this.props.currentUser.queryID
     }else{
       currentTrip = this.props.currentUser.currentTrip

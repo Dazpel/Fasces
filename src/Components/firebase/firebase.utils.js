@@ -370,6 +370,7 @@ export const updateImageArr = async (url, tripID) => {
   //   createdAt: createdAt,
   //   amount: imgAmount,
   // };
+  console.log(url, tripID)
   try {
     console.log('running update');
     imageArr.update({
@@ -400,7 +401,7 @@ const sentinel = async (data, upF, currentTrip) => {
 };
 
 export const receiptListArr = async (query, user, updateFunc) => {
-  console.log(query)
+  console.log(query, user, updateFunc)
   let currentTrip = '';
   if (query) {
     currentTrip = user.queryID;

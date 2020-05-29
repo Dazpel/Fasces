@@ -32,12 +32,6 @@ router.post('/sendEmail', (req, res, next) => {
   });
 });
 
-{/* <>
-              <ListItem button key={i} onClick={()=> goToTrip(userID, el.id)}>
-                <ListItemText primary={el.name} secondary={el.date} />
-              </ListItem>
-              <Divider />
-            </> */}
 
 router.get('/', (req, res, next) => {
   res.status(200).json({ msg: 'Working' });
