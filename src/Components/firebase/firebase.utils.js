@@ -94,13 +94,6 @@ export const findMyFriend = async (email) => {
   return tripExist;
 };
 
-// export const endTrip = async (userID, tripID) => {
-//   let user = await firestore.collection('users').doc(userID);
-//   let tripRef = await firestore.collection('trips').doc(tripID).get();
-//   let tripData = tripRef.data();
-//   let users = tripData.users;
-// }
-
 export const updateExpenses = async (userID, x) => {
   let user = await firestore.collection('users').doc(userID);
   let userData = await firestore.collection('users').doc(userID).get();
@@ -113,25 +106,23 @@ export const updateExpenses = async (userID, x) => {
   } catch (error) {
     console.log('Error ending trip', error);
   }
-
-  try {
-    let emails = [];
-    user.map(async (user) => {
-      emails.push(user.email);
-    });
-    return emails;
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
 export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
   let user = await firestore.collection('users').doc(userID);
+  let userRef = await user.get();
+  let tripRef = await firestore.collection('trips').doc(tripID);
+
   let tripInfo = {
     id: tripID,
     name: tripName,
     date: createdAt,
+  };
+
+  let newUser = {
+    id: userID,
+    email: userRef.data().email,
   };
   try {
     user.update({
@@ -139,29 +130,143 @@ export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
       trips: firebase.firestore.FieldValue.arrayUnion(tripInfo),
       currentTrip: tripID,
     });
-  } catch (error) {
-    console.log('Error adding stock', error);
-  }
-};
 
-export const endTripStatus = async (userID) => {
-
-  let user = await firestore.collection('users').doc(userID);
-  console.log(user)
-  try {
-    user.update({
-      activeTrip: false,
+    console.log(newUser);
+    tripRef.update({
+      users: firebase.firestore.FieldValue.arrayUnion(newUser),
     });
   } catch (error) {
     console.log('Error adding stock', error);
   }
 };
 
-export const retrieveImages = async (user) => {
+export const tripBalance = async (tripId) => {
+  let x = []
+  let trips = await tripList()
+  let tripIndex = 0
+  trips.map((ele, i) => {
+      if (ele.id === tripId){tripIndex =  i}
+  })
+  let users = trips[tripIndex].data().users
+  let trip = await firestore.collection('trips').doc(tripId);
+  //let numOfUsers = users.length
+  users.map(async (userId) => {
+    
+      let user = await firestore.collection('users').doc(userId.id);
+      let userData = await firestore.collection('users').doc(userId.id).get()
+      let expense = userData.data().expenses
+      x = { name:userData.data().displayName, balance:expense}
+      console.log(x)
+      try {
+          user.update({
+            expenses: 0,
+          });
+          trip.update({
+            balance: firebase.firestore.FieldValue.arrayUnion(x)
+          });
+        } catch (error) {
+          console.log('Error adding stock', error);
+        }
+      return 0
+  })
+  
+  console.log(x)
+  try {
+      
+  } catch (error) {
+      console.log('Error adding stock', error);
+  }
+}
+
+export const getTripData = async (tripID) => {
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  let tripData = tripRef.data();
+  let obj = {
+    name: tripData.tripName,
+    date: tripData.createdAt,
+  };
+
+  return obj;
+};
+
+export const getTripBalance = async (tripID) => {
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  let tripData = tripRef.data();
+
+  return tripData.balance;
+};
+
+// export const endTripStatus = async (userID) => {
+//   let user = await firestore.collection('users').doc(userID);
+//   console.log(user);
+//   try {
+//     user.update({
+//       activeTrip: false,
+//       currentTrip: '',
+//     });
+//   } catch (error) {
+//     console.log('Error adding stock', error);
+//   }
+// };
+
+export const endTripStatus = async (tripID) => {
+  let tripData = await firestore.collection('trips').doc(tripID).get();
+  let users = tripData.data().users
+  users.map(async (ele) => {
+    let user = await firestore.collection('users').doc(ele.id)
+    try {
+      user.update({
+        activeTrip: false,
+        currentTrip: ''
+      })
+    }catch (error) {
+      console.log('Error adding stock', error);
+    }
+  })
+};
+
+export const cosimo = async (userName, tripId) => {
+  let x = await balance(tripId)
+  let output = ''
+  for(let i = 0; i < x.length; i++)
+  {
+      if( x[i].balance < 0 )
+      {
+          for(let j = 0; j < x.length; j++)
+          {
+              if(x[j].balance > 0)
+              {
+                  if(x[j].balance >= (x[i].balance*-1))
+                  {
+                      if(x[i].name === userName)
+                        {output += "You should pay " + x[j].name + " $" + (x[i].balance*-1)+ '\n'}
+                      x[j].balance += x[i].balance
+                      x[i].balance = 0;
+                      break;
+                  }
+                  else 
+                  {
+                      if(x[i].name === userName)
+                        {output += "You should pay " + x[j].name + " $" + (x[j].balance)+ '\n'}
+                      x[i].balance += x[j].balance
+                      x[j].balance = 0
+                  }
+              }
+          }
+      }
+      else
+      {
+          if(x[i].name === userName)
+            output += 'You have paid!'
+      }
+  }
+  return output
+}
+
+export const retrieveImages = async (user, query) => {
   let currentTrip = '';
-  if (user.queryID) {
+  if (query) {
     currentTrip = user.queryID;
-    console.log(currentTrip);
   } else {
     currentTrip = user.currentTrip;
   }
@@ -220,19 +325,14 @@ export const userList = async () => {
 
 export const balance = async (tripId) => {
   let trip = await firestore.collection('trips').doc(tripId).get();
-  return trip.balance;
+  return trip.data().balance;
 };
 
 export const tripList = async () => {
-  let userArr = [];
 
   let users = await firestore.collection('trips').get();
-  // users.docs.map((doc, i) => (userArr[i] = { id: doc.id, ...doc.data() }));
   return users.docs;
-  // if (userArr.length > 0) {
-  //   console.log(userArr);
-  //   return userArr;
-  // }
+
 };
 
 export const endTrip = async (userID, tripID) => {
@@ -279,17 +379,16 @@ export const updateImageArr = async (url, tripID) => {
     console.log('Error adding image', error);
   }
 };
-const sentinel = async (data, upF) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
-
-  let doc = await firestore.collection('images').doc(docID);
+const sentinel = async (data, upF, currentTrip) => {
+  let tripID = currentTrip;
+  let doc = await firestore.collection('trips').doc(tripID);
 
   let observer = await doc.onSnapshot(
     async (docSnapshot) => {
       let getDoc = await doc.get().then(async (doc) => {
         if (!doc.exists) {
           console.log('No such document!');
-        } else if (data.length !== doc.data().receiptImg.length) {
+        } else if (data.length !== doc.data().tripReceipts.length) {
           upF();
         }
       });
@@ -300,9 +399,10 @@ const sentinel = async (data, upF) => {
   );
 };
 
-export const receiptListArr = async (user, updateFunc) => {
+export const receiptListArr = async (query, user, updateFunc) => {
+  console.log(query)
   let currentTrip = '';
-  if (user.queryID) {
+  if (query) {
     currentTrip = user.queryID;
   } else {
     currentTrip = user.currentTrip;
@@ -326,9 +426,9 @@ export const receiptListArr = async (user, updateFunc) => {
   return receiptArr;
 };
 
-export const updateReceiptArr = async (id, imgURL, imgAmount) => {
-  const docID = '4mcO13n8lUBeSezFmLD1';
-  let receiptArr = await firestore.collection('images').doc(docID);
+export const updateReceiptArr = async (id, imgURL, imgAmount, currentTrip) => {
+  let tripID = currentTrip;
+  let receiptArr = await firestore.collection('trips').doc(tripID);
   const date = new Date();
   const createdAt = date.toDateString();
   let item = {
@@ -340,7 +440,7 @@ export const updateReceiptArr = async (id, imgURL, imgAmount) => {
 
   try {
     receiptArr.update({
-      receiptImg: firebase.firestore.FieldValue.arrayUnion(item),
+      tripReceipts: firebase.firestore.FieldValue.arrayUnion(item),
     });
   } catch (error) {
     console.log('Error adding stock', error);

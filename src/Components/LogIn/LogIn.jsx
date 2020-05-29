@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
+
 import GoogleButton from 'react-google-button';
 import './LogIn.css';
 
-import { auth, signInWithGoogle } from '../firebase/firebase.utils';
+import { signInWithGoogle } from '../firebase/firebase.utils';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

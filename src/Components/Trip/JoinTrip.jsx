@@ -5,11 +5,7 @@ import { useHistory } from 'react-router-dom';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { findMyFriend, updateTripStatus } from '../firebase/firebase.utils';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import { findMyFriend, updateTripStatus, getTripData } from '../firebase/firebase.utils';
 
 function getModalStyle() {
   //   const top = 50 + rand();
@@ -72,7 +68,9 @@ export default function NewTrip({ user }) {
   };
 
   const joinTrip = async (userID, tripID) => {
-    await updateTripStatus(userID, tripID )
+
+    let x = await getTripData(tripID)
+    await updateTripStatus(userID, tripID, x.name, x.date )
     history.push('/')
   };
 

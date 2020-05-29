@@ -14,14 +14,16 @@ export const calculateTotal = async (x, tripId, currentUser) => {
     let users = trips[tripIndex].data().users
     let numOfUsers = users.length
     let value = Number((x/numOfUsers).toFixed(2))*-1
+    console.log(users)
     users.map(user => {
+        
         //currentUser.id
-        if((currentUser.id ? currentUser.id : 'rFEdDIXvFjSpjvIMpAm8GhHxJl72') === user)
+        if((currentUser.id ? currentUser.id : 'rFEdDIXvFjSpjvIMpAm8GhHxJl72') === user.id)
         {
-            updateExpenses(user, value - value*numOfUsers)
+            updateExpenses(user.id, value - value*numOfUsers)
         }
         else 
-            updateExpenses(user, value)
+            updateExpenses(user.id, value)
         
     })
 }
