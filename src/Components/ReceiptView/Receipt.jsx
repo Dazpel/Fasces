@@ -6,10 +6,7 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 import Grid from '@material-ui/core/Grid';
-import Navbar from '../navbar/Navbar';
-import Topbar from '../navbar/Topbar';
 import ToastMessage from '../Toast/toastMessage';
-import Chat from '../Chat/Chat'
 import './receipt.css';
 import {calculateTotal} from '../Algorithm/receiptAlgorithm'
 
@@ -117,7 +114,7 @@ export default class Receipt extends Component {
     return (
       <div>
         <div className="table">
-          <ReceiptTable currentUser={this.props.currentUser}/>
+          <ReceiptTable currentUser={this.props.currentUser} query={this.props.query}/>
         </div>
 
         <Grid container justify="center" alignItems="center" className='receiptBtn'>

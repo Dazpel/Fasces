@@ -58,10 +58,10 @@ function goToTrip(props, uID, tripID, option) {
 
   switch (option) {
     case 1:
-      props.history.push('/home/receipt');
+      props.history.push('/pastTrip/receipt');
       break;
     case 2:
-      props.history.push('/home/image');
+      props.history.push('/pastTrip/image');
       break;
     case 3:
       props.history.push('/pastTrip/expenses')

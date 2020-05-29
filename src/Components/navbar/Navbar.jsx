@@ -68,18 +68,9 @@ const useStyles = makeStyles((theme) => ({
             />
             <BottomNavigationAction
               style={{ color: "#0095ff" }}
-              label="Payments"
-              icon={
-                <Link to="/Calculate" style={{ color: "#0095ff" }}>
-                  <MoneyIcon />
-                </Link>
-              }
-            />
-            <BottomNavigationAction
-              style={{ color: "#0095ff" }}
               label="Images"
               icon={
-                <Link to="/home/image" style={{ color: "#0095ff" }}>
+                <Link user='user' to="/home/image" style={{ color: "#0095ff" }}>
                   <PhotoLibraryIcon />
                 </Link>
               }

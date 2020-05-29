@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import ToastMessage from '../Toast/toastMessage';
 import actions from '../../RouteContainer/axiosCalls';
 import { retrieveImages, updateImageArr } from '../firebase/firebase.utils';
-import Progress from '../progress/Progress';
 import './groupImage.css';
 
 export default class GroupImage extends Component {
@@ -17,8 +16,8 @@ export default class GroupImage extends Component {
     saved: false,
   };
 
-  updateArr = async (user) => {
-    let arr = await retrieveImages(user);
+  updateArr = async (user, query) => {
+    let arr = await retrieveImages(user, query);
 
     this.setState({
       imageArr: arr,
@@ -26,7 +25,8 @@ export default class GroupImage extends Component {
   };
 
   componentDidMount() {
-    this.updateArr(this.props.currentUser, this.state.imageArr);
+
+    this.updateArr(this.props.currentUser, this.props.query);
   }
 
   // this method handles just the file upload

@@ -263,11 +263,10 @@ export const cosimo = async (userName, tripId) => {
   return output
 }
 
-export const retrieveImages = async (user) => {
+export const retrieveImages = async (user, query) => {
   let currentTrip = '';
-  if (user.queryID) {
+  if (query) {
     currentTrip = user.queryID;
-    console.log(currentTrip);
   } else {
     currentTrip = user.currentTrip;
   }
@@ -330,15 +329,10 @@ export const balance = async (tripId) => {
 };
 
 export const tripList = async () => {
-  let userArr = [];
 
   let users = await firestore.collection('trips').get();
-  // users.docs.map((doc, i) => (userArr[i] = { id: doc.id, ...doc.data() }));
   return users.docs;
-  // if (userArr.length > 0) {
-  //   console.log(userArr);
-  //   return userArr;
-  // }
+
 };
 
 export const endTrip = async (userID, tripID) => {
@@ -405,9 +399,10 @@ const sentinel = async (data, upF, currentTrip) => {
   );
 };
 
-export const receiptListArr = async (user, updateFunc) => {
+export const receiptListArr = async (query, user, updateFunc) => {
+  console.log(query)
   let currentTrip = '';
-  if (user.queryID) {
+  if (query) {
     currentTrip = user.queryID;
   } else {
     currentTrip = user.currentTrip;
