@@ -72,7 +72,7 @@ export default class GroupImage extends Component {
 
     const { imageArr } = this.state;
     let currentTrip = '';
-    if (this.props.currentUser.queryID) {
+    if (this.props.query) {
       currentTrip = this.props.currentUser.queryID;
     } else {
       currentTrip = this.props.currentUser.currentTrip;
