@@ -79,13 +79,7 @@ export default class App extends Component {
       <div>
       {currentUser ? <Topbar/> : ('')}
         <Switch>
-        {/* <Route
-            exact
-            path="/newhome"
-            component={(props) => (
-              <NewHome {...props} currentUser={currentUser}/>
-            )}
-          /> */}
+          
           <Route
             exact
             path="/chat/:id"
@@ -97,7 +91,12 @@ export default class App extends Component {
           <Route
             exact
             path="/home/receipt"
-            component={(props) => (<Receipt {...props} currentUser={this.state.currentUser}/>)}
+            component={(props) => (<Receipt {...props} currentUser={this.state.currentUser} query={false}/>)}
+          />
+          <Route
+            exact
+            path="/pastTrip/receipt"
+            component={(props) => (<Receipt {...props} currentUser={this.state.currentUser} query={true}/>)}
           />
           <Route
             exact
@@ -117,7 +116,12 @@ export default class App extends Component {
           <Route
             exact
             path="/home/image"
-            component={(props) => <GroupImage {...props} currentUser={this.state.currentUser}/>}
+            component={(props) => <GroupImage {...props} currentUser={this.state.currentUser} query={false}/>}
+          />
+          <Route
+            exact
+            path="/pastTrip/image"
+            component={(props) => <GroupImage {...props} currentUser={this.state.currentUser} query={true}/>}
           />
           <Route
             path="/Calculate"

@@ -17,8 +17,8 @@ export default class GroupImage extends Component {
     saved: false,
   };
 
-  updateArr = async (user) => {
-    let arr = await retrieveImages(user);
+  updateArr = async (user, query) => {
+    let arr = await retrieveImages(user, query);
 
     this.setState({
       imageArr: arr,
@@ -26,7 +26,8 @@ export default class GroupImage extends Component {
   };
 
   componentDidMount() {
-    this.updateArr(this.props.currentUser, this.state.imageArr);
+
+    this.updateArr(this.props.currentUser, this.props.query);
   }
 
   // this method handles just the file upload

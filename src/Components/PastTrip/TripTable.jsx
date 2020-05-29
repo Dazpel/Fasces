@@ -19,7 +19,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import './PastTrips.css';
-import { singleQuery, tripBalance } from '../firebase/firebase.utils';
+import { singleQuery, getTripBalance } from '../firebase/firebase.utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +42,7 @@ const updateUser = async (uID, tripID) => {
 
 const getBalance = async (tripID, name, setBalance) => {
 
-  let x = await tripBalance(tripID)
+  let x = await getTripBalance(tripID)
   let balance = ''
   x.map(el => {
     if (el.name === name) {
@@ -58,10 +58,10 @@ function goToTrip(props, uID, tripID, option) {
 
   switch (option) {
     case 1:
-      props.history.push('/home/receipt');
+      props.history.push('/pastTrip/receipt');
       break;
     case 2:
-      props.history.push('/home/image');
+      props.history.push('/pastTrip/image');
       break;
 
     default:

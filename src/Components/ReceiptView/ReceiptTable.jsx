@@ -24,10 +24,8 @@ export default class ReceiptTable extends Component {
   };
 
   updateArr = async () => {
-    console.log('beign called');
-
     try {
-      let list = await receiptListArr(this.props.currentUser);
+      let list = await receiptListArr(this.props.query, this.props.currentUser);
       this.setState({
         imageArr: list,
       });
@@ -37,8 +35,9 @@ export default class ReceiptTable extends Component {
   };
 
   async componentDidMount() {
+    
     try {
-      let list = await receiptListArr(this.props.currentUser, this.updateArr);
+      let list = await receiptListArr(this.props.query, this.props.currentUser, this.updateArr);
       this.setState({
         imageArr: list,
       });
