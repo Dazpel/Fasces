@@ -151,12 +151,20 @@ export const getTripData = async (tripID) => {
   return obj;
 };
 
+export const tripBalance = async (tripID) => {
+  let tripRef = await firestore.collection('trips').doc(tripID).get();
+  let tripData = tripRef.data();
+
+  return tripData.balance;
+};
+
 export const endTripStatus = async (userID) => {
   let user = await firestore.collection('users').doc(userID);
   console.log(user);
   try {
     user.update({
       activeTrip: false,
+      currentTrip: '',
     });
   } catch (error) {
     console.log('Error adding stock', error);

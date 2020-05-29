@@ -37,11 +37,11 @@ class AccountView extends Component {
           </Link>
           <Divider />
           <Link
-            to="/PastTrips"
+            to="/home/pastTrip"
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <ListItem button>
-              <ListItemText primary="Trips" />
+              <ListItemText primary="Past Trips" />
             </ListItem>
           </Link>
           <Divider light />
