@@ -4,7 +4,6 @@ import {
   auth,
   createUserProfileDocument,
 } from './Components/firebase/firebase.utils';
-import Home from './Components/Home/Home';
 import './App.css';
 import LogIn from './Components/LogIn/LogIn';
 import Groups from './Components/Groups/Groups';
@@ -79,7 +78,7 @@ export default class App extends Component {
       <div>
       {currentUser ? <Topbar/> : ('')}
         <Switch>
-          
+
           <Route
             exact
             path="/chat/:id"

@@ -8,12 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Progress from '../progress/Progress';
 import Grid from '@material-ui/core/Grid';
 import ImageModal from './receiptImageModal'
-import { Link } from 'react-router-dom';
 import {
-  saveReceipt,
   receiptListArr,
-  updateReceiptArr,
-  sentinel,
 } from '../firebase/firebase.utils';
 import './receipt.css';
 

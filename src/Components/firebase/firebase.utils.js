@@ -275,15 +275,10 @@ export const balance = async (tripId) => {
 };
 
 export const tripList = async () => {
-  let userArr = [];
 
   let users = await firestore.collection('trips').get();
-  // users.docs.map((doc, i) => (userArr[i] = { id: doc.id, ...doc.data() }));
   return users.docs;
-  // if (userArr.length > 0) {
-  //   console.log(userArr);
-  //   return userArr;
-  // }
+
 };
 
 export const endTrip = async (userID, tripID) => {

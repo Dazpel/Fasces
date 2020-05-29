@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import ToastMessage from '../Toast/toastMessage';
 import actions from '../../RouteContainer/axiosCalls';
 import { retrieveImages, updateImageArr } from '../firebase/firebase.utils';
-import Progress from '../progress/Progress';
 import './groupImage.css';
 
 export default class GroupImage extends Component {

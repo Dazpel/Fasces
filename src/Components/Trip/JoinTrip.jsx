@@ -7,10 +7,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { findMyFriend, updateTripStatus, getTripData } from '../firebase/firebase.utils';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
   //   const top = 50 + rand();
   //   const left = 50 + rand();
