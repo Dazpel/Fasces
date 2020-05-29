@@ -58,7 +58,7 @@ export default function GroupImageModal({ url }) {
 
   return (
     <div>
-      <img src={url} alt="groupImg" onClick={handleOpen} />
+      <img src={url} alt="groupImg" onClick={handleOpen} style={{ width: '185px',  height: '185px'  }} />
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>

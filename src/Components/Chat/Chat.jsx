@@ -27,7 +27,6 @@ export default class Chat extends Component {
               name: el.displayName,
               email: el.email,
               photoUrl: el.photoURL,
-              welcomeMessage: 'Hey there! How are you? :-)',
             })
           );
         }
@@ -48,7 +47,6 @@ export default class Chat extends Component {
         name: currentUser.displayName,
         email: currentUser.email,
         photoUrl: currentUser.photoURL,
-        welcomeMessage: 'Hey there! How are you? :-)',
       });
 
       window.talkSession = new Talk.Session({
@@ -74,7 +72,7 @@ export default class Chat extends Component {
 
       conversation.setAttributes({
         photoUrl: 'https://avatars0.githubusercontent.com/u/4854004?s=280&v=4',
-        subject: 'Testing TalkJS',
+        subject: 'Bahamas',
       });
 
       var chatbox = window.talkSession.createChatbox(conversation);
