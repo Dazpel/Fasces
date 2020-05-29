@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Talk from 'talkjs';
-import { userList } from '../firebase/firebase.utils';
+import { userList, groupList } from '../firebase/firebase.utils';
 import './chat.css';
 import Topbar from '../navbar/Topbar'
 import Progress from '../progress/Progress'
@@ -18,42 +18,42 @@ export default class Chat extends Component {
 
   async componentDidMount() {
     const setParticipants = (users, currentUser) => {
+     
       let x = [];
       users.map((el, i) => {
         if (el.id !== currentUser) {
+          
           x.push(
             new Talk.User({
               id: el.id,
-              name: el.displayName,
+              name: el.name,
               email: el.email,
-              photoUrl: el.photoURL,
             })
           );
         }
       });
-
+      
       return x;
     };
     const currentUser = this.props.currentUser;
     let groupUsers = await userList();
-
+    // let groupUsers = await groupList(currentUser.currentTrip);
+    
     this.setState({
       groupUsers: groupUsers,
     });
-
+    
     Talk.ready.then(() => {
       var me = new Talk.User({
         id: currentUser.id,
         name: currentUser.displayName,
         email: currentUser.email,
-        photoUrl: currentUser.photoURL,
       });
 
       window.talkSession = new Talk.Session({
         appId: 'taa7PJf6',
         me: me,
       });
-
       let participants = setParticipants(this.state.groupUsers, currentUser.id);
 
       var conversation = window.talkSession.getOrCreateConversation(
@@ -65,7 +65,6 @@ export default class Chat extends Component {
       // );
 
       conversation.setParticipant(me);
-
       participants.map((el) => {
         conversation.setParticipant(el);
       });
@@ -80,16 +79,14 @@ export default class Chat extends Component {
     });
   }
 
+  
 
 
   render() {
-    console.log(this.state.groupUsers);
+    
     return (
-      <div className="full-view">
-      {/* <div className="top">
+      <div className="full-view" >
 
-      </div> */}
-      
       {this.state.groupUsers ? (<div className="chatbox-container" ref={this.talkjsContainer}/>) : (<Progress/>)}
     
     

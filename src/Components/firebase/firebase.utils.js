@@ -56,12 +56,7 @@ export const createNewTrip = async (user, tripName, id) => {
     const tripImages = [];
     const tripReceipts = [];
     const isActive = true;
-    const users = [
-      {
-        id: user.id,
-        email: email,
-      },
-    ];
+    
 
     try {
       await tripRef.set({
@@ -70,7 +65,6 @@ export const createNewTrip = async (user, tripName, id) => {
         tripName,
         tripImages,
         tripReceipts,
-        users,
       });
       //SET USER AS ACTIVE IN A TRIP SO HE CANT CREATE A NEW ONE AND BE ABLE TO HAVE FRIENDS JOIN
       await updateTripStatus(user.id, id, tripName, createdAt);
@@ -121,6 +115,7 @@ export const updateTripStatus = async (userID, tripID, tripName, createdAt) => {
   };
 
   let newUser = {
+    name: userRef.data().displayName,
     id: userID,
     email: userRef.data().email,
   };
@@ -323,6 +318,21 @@ export const userList = async () => {
   }
 };
 
+export const groupList = async (currentTrip) => {
+  let userArr = [];
+  
+  let users = await firestore.collection('trips').doc(currentTrip).get();
+  let userRef = users.data()
+  userRef.users.map((doc, i) => (userArr[i] = doc ));
+  
+  
+  if (userArr.length > 0) {
+    console.log(userArr);
+    return userArr;
+  }
+ 
+};
+
 export const balance = async (tripId) => {
   let trip = await firestore.collection('trips').doc(tripId).get();
   return trip.data().balance;
@@ -370,7 +380,6 @@ export const updateImageArr = async (url, tripID) => {
   //   createdAt: createdAt,
   //   amount: imgAmount,
   // };
-  console.log(url, tripID)
   try {
     console.log('running update');
     imageArr.update({
@@ -401,7 +410,6 @@ const sentinel = async (data, upF, currentTrip) => {
 };
 
 export const receiptListArr = async (query, user, updateFunc) => {
-  console.log(query, user, updateFunc)
   let currentTrip = '';
   if (query) {
     currentTrip = user.queryID;
