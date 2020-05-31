@@ -50,20 +50,22 @@ export default class Chat extends Component {
         email: currentUser.email,
       });
 
+      console.log('at talksessu', this.state.groupUsers)
       window.talkSession = new Talk.Session({
         appId: 'taa7PJf6',
         me: me,
       });
       let participants = setParticipants(this.state.groupUsers, currentUser.id);
-
+      console.log('after part')
       var conversation = window.talkSession.getOrCreateConversation(
         this.props.chatID
       );
+      
 
       // var conversation = window.talkSession.getOrCreateConversation(
       //   this.props.match.params.id
       // );
-
+      console.log('participants')
       conversation.setParticipant(me);
       participants.map((el) => {
         conversation.setParticipant(el);
