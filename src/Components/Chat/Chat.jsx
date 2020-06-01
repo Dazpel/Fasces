@@ -33,6 +33,7 @@ export default class Chat extends Component {
     const currentUser = this.props.currentUser;
     let groupUsers = await userList();
     // let groupUsers = await groupList(currentUser.currentTrip);
+    //console.log('comment to commit')
 
     this.setState({
       groupUsers: groupUsers,
