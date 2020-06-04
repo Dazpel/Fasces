@@ -5,8 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +47,7 @@ export default function MenuAppBar() {
             }}
           >
             <Link to="/" style={{ textDecoration: "none", color: "#0095ff" }}>
-              SPLITEX
+              SPLITEX <img src="/x.png" alt="X logo" style={{width:"20px"}}/>
             </Link>
           </Typography>
 

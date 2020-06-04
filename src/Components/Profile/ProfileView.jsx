@@ -11,20 +11,16 @@ class ProfileView extends Component {
     quote: ''
   };
 
-  // componentDidMount(){
-  //   this.props.currentUser.quote ? this.setState({
-  //     quote: true
-  //   }) : this.setState({
-  //     quote: false
-  //   })
-  // }
 
+  // handles the changes when typing quote
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
 
+
+// Sends new quote to database
   onSubmit = (e) => {
     e.preventDefault();
  
@@ -32,6 +28,7 @@ class ProfileView extends Component {
     
   };
 
+  // Erases quote when asked to make new quote
   onEdit = (e) => {
     e.preventDefault();
 
