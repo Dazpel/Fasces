@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import Talk from 'talkjs';
-import { userList } from '../firebase/firebase.utils';
+import { userList, groupList } from '../firebase/firebase.utils';
 import './chat.css';
-import Topbar from '../navbar/Topbar'
-import Progress from '../progress/Progress'
-
-
+import Topbar from '../navbar/Topbar';
+import Progress from '../progress/Progress';
 
 export default class Chat extends Component {
   constructor(props) {
@@ -26,16 +24,16 @@ export default class Chat extends Component {
               id: el.id,
               name: el.displayName,
               email: el.email,
-              photoUrl: el.photoURL,
             })
           );
         }
       });
-
       return x;
     };
     const currentUser = this.props.currentUser;
     let groupUsers = await userList();
+    // let groupUsers = await groupList(currentUser.currentTrip);
+    //console.log('comment to commit')
 
     this.setState({
       groupUsers: groupUsers,
@@ -46,7 +44,6 @@ export default class Chat extends Component {
         id: currentUser.id,
         name: currentUser.displayName,
         email: currentUser.email,
-        photoUrl: currentUser.photoURL,
       });
 
       window.talkSession = new Talk.Session({
@@ -65,7 +62,6 @@ export default class Chat extends Component {
       // );
 
       conversation.setParticipant(me);
-
       participants.map((el) => {
         conversation.setParticipant(el);
       });
@@ -80,19 +76,15 @@ export default class Chat extends Component {
     });
   }
 
-
-
   render() {
-    console.log(this.state.groupUsers);
     return (
       <div className="full-view">
-      {/* <div className="top">
-
-      </div> */}
-      
-      {this.state.groupUsers ? (<div className="chatbox-container" ref={this.talkjsContainer}/>) : (<Progress/>)}
-    
-    
-    </div>
-    )}
+        {this.state.groupUsers ? (
+          <div className="chatbox-container" ref={this.talkjsContainer} />
+        ) : (
+          <Progress />
+        )}
+      </div>
+    );
+  }
 }
